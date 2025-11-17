@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}E-Land Records - Officer Registration{% endblock %}
+
+{% block content %}
+<div class="register-container">
+  <div class="register-box">
+    <h2>Create Official Account</h2>
+    <form method="post" class="form-grid" id="officialRegistrationForm" onsubmit="return validateForm()">
+      {% csrf_token %}
+      <!-- Officer Information -->
+      <div class="form-section">
+        <h3><i class="fas fa-user-tie"></i> Officer Information</h3>
+        <div class="form-group">
+          <label for="{{ form.first_name.id_for_label }}">
+            First Name <span class="required">*</span>
+          </label>
+          {{ form.first_name|add_class:"form-input" }}
+        </div>
+        <div class="form-group">
+          <label for="{{ form.last_name.id_for_label }}">
+            Last Name <span class="required">*</span>
+          </label>
+          {{ form.last_name|add_class:"form-input" }}
+        </div>
+        <div class="form-group">
+          <label for="{{ form.designation.id_for_label }}">
+            Designation <span class="required">*</span>
+          </label>
+          {{ form.designation|add_class:"form-input" }}
+        </div>
+        <div class="form-group">
+          <label for="{{ form.department.id_for_label }}">
+            Department <span class="required">*</span>
+          </label>
+          {{ form.department|add_class:"form-input" }}
+        </div>
+      </div>
+
+      <!-- Contact Details -->
+      <div class="form-section">
+        <h3><i class="fas fa-address-card"></i> Contact Details</h3>
+        <div class="form-group">
+          <label for="{{ form.email.id_for_label }}">
+            Official Email <span class="required">*</span>
+          </label>
+          {{ form.email|add_class:"form-input" }}
+        </div>
+        <div class="form-group">
+          <label for="{{ form.phone.id_for_label }}">
+            Mobile Number <span class="required">*</span>
+          </label>
+          {{ form.phone|add_class:"form-input" }}
+        </div>
+        <div class="form-group">
+          <label for="{{ form.office_id.id_for_label }}">
+            Office ID <span class="required">*</span>
+          </label>
+          {{ form.office_id|add_class:"form-input" }}
+        </div>
+      </div>
+
+      <!-- Account Security -->
+      <div class="form-section full-width">
+        <h3><i class="fas fa-lock"></i> Account Security</h3>
+        <div class="form-group">
+          <label for="{{ form.username.id_for_label }}">
+            Username <span class="required">*</span>
+          </label>
+          {{ form.username|add_class:"form-input" }}
+        </div>
+        <div class="form-group">
+          <label for="{{ form.password1.id_for_label }}">
+            Password <span class="required">*</span>
+          </label>
+          {{ form.password1|add_class:"form-input" }}
+        </div>
+        <div class="form-group">
+          <label for="{{ form.password2.id_for_label }}">
+            Confirm Password <span class="required">*</span>
+          </label>
+          {{ form.password2|add_class:"form-input" }}
+        </div>
+      </div>
+
+      {% comment %} <!-- OTP Verification -->
+      <div class="form-section full-width">
+        <h3><i class="fas fa-shield-alt"></i> OTP Verification</h3>
+        <div class="form-group">
+          <button type="button" class="send-otp-button" onclick="sendOTP()">
+            <i class="fas fa-paper-plane"></i> Send OTP
+          </button>
+        </div>
+        <div class="form-group otp-input-group">
+          <label for="id_otp">Enter OTP <span class="required">*</span></label>
+          <div class="otp-boxes">
+            <input type="text" maxlength="1" class="otp-box" required />
+            <input type="text" maxlength="1" class="otp-box" required />
+            <input type="text" maxlength="1" class="otp-box" required />
+            <input type="text" maxlength="1" class="otp-box" required />
+            <input type="text" maxlength="1" class="otp-box" required />
+            <input type="text" maxlength="1" class="otp-box" required />
+          </div>
+          <div class="otp-timer">
+            Time remaining: <span id="timer">02:00</span>
+          </div>
+        </div>
+      </div> {% endcomment %}
+
+      <!-- Terms and Conditions -->
+      <div class="form-section full-width">
+        <div class="form-group checkbox-group">
+          {{ form.terms }}
+          <label for="{{ form.terms.id_for_label }}">
+            I agree to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>
+          </label>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-section full-width">
+        <button type="submit" class="register-button">
+          <i class="fas fa-user-plus"></i> Create Official Account
+        </button>
+      </div>
+    </form>
+    <div class="login-link">
+      Already have an account? <a href="{% url 'home' %}">Login here</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Basic form validation (adjust as needed)
+  function validateForm() {
+    const password = document.getElementById("id_password1").value;
+    const confirmPassword = document.getElementById("id_password2").value;
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return false;
+    }
+    // Additional validations can be added here.
+    return true;
+  }
+
+  // Auto-focus next OTP input
+  document.querySelectorAll(".otp-box").forEach((input, index, list) => {
+    input.addEventListener("input", function() {
+      if (this.value.length === 1 && index < list.length - 1) {
+        list[index + 1].focus();
+      }
+    });
+  });
+
+  // Dummy sendOTP function for demonstration.
+  // Replace this with your actual OTP-sending logic (AJAX call or form submission).
+  function sendOTP() {
+    alert("OTP sent! (Implement your OTP sending logic here)");
+  }
+</script>
+{% endblock %}

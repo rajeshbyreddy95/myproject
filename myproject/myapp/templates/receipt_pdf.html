@@ -1,0 +1,52 @@
+<div style="max-width: 700px; margin: auto; padding: 30px; font-family: 'Segoe UI', sans-serif; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); line-height: 1.6; font-size: 15px;">
+
+  <!-- Header -->
+  <div style="text-align: center; padding-bottom: 15px; border-bottom: 2px solid #333;">
+    <h2 style="margin: 0; color: #2c3e50;">Application for Leasing Farmland</h2>
+    <p style="margin: 8px 0; font-size: 14px; color: #555;">Receipt Number: <strong>{{ land_request.receipt_number }}</strong></p>
+    <p style="font-size: 14px; color: #555;">Date of Application: <strong>{{ land_request.created_at|date:"F d, Y" }}</strong></p>
+  </div>
+
+  <!-- Body -->
+  <div style="margin-top: 20px;">
+    <p>Dear <strong>{{ land_request.full_name }}</strong>,</p>
+
+    <p>
+      I am writing to formally request the lease of your farmland located at 
+      <strong>{{ land_request.address }}</strong>. I have a strong interest in agriculture and believe this land is suitable for my needs.
+    </p>
+
+    <p>
+      The property spans <strong>{{ land_request.area }} sq. ft.</strong> and is listed under 
+      Survey No. <strong>{{ land_request.survey_number }}</strong>.
+    </p>
+
+    <p>
+      <strong>Location Details:</strong><br>
+      State: {{ land_request.state }}<br>
+      City: {{ land_request.city }}<br>
+      Pincode: {{ land_request.pincode }}
+    </p>
+
+    <p>
+      <strong>Current Status of Request:</strong> {{ land_request.get_status_display }}<br>
+      <strong>Currently With:</strong>
+      {% if land_request.currently_with %}
+        {% if land_request.currently_with.designation %}
+          {{ land_request.currently_with.designation|title }}
+        {% else %}
+          Official
+        {% endif %}
+      {% endif %}
+    </p>
+
+    <p>
+      I agree to the terms and conditions outlined in the application. Please let me know if any further documentation is needed.
+    </p>
+
+    <p>Thank you for considering my application.</p>
+
+    <p style="margin-top: 30px;">Sincerely,<br><strong>{{ land_request.full_name }}</strong></p>
+  </div>
+
+</div>

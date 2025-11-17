@@ -1,0 +1,153 @@
+{% extends "base_eLand.html" %}
+
+  {% block css %}
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      min-height: 100vh;
+    }
+    /* Left column: Letter */
+    .letter-column {
+      width: 50%;
+      padding: 20px;
+      background-color: #f9f9f9;
+      box-sizing: border-box;
+      border-right: 1px solid #ccc;
+    }
+    .letter-column h2 {
+      margin-bottom: 15px;
+    }
+    .letter-body {
+      white-space: pre-line; /* preserves line breaks if needed */
+      margin-bottom: 20px;
+    }
+    .letter-signoff {
+      margin-top: 40px;
+    }
+
+    /* Right column: Receipt details */
+    .receipt-column {
+      width: 50%;
+      padding: 20px;
+      background-color: #fff;
+      box-sizing: border-box;
+    }
+    .receipt-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .receipt-header h2 {
+      margin-bottom: 5px;
+    }
+    .section {
+      margin-bottom: 15px;
+    }
+    .section h4 {
+      margin-bottom: 8px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+    .section p {
+      margin: 4px 0;
+    }
+    /* Submit Button */
+    .submit-btn-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .submit-btn {
+      padding: 10px 20px;
+      background-color: #2e77bb;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      background-color: #1f5a8b;
+    }
+  @media print {
+    .receipt-column {
+      display: none;
+    }
+  }
+  {% endblock%}
+
+
+   {% block content %}
+   <div class="container">
+    {% include "receipt_pdf.html" %}
+
+    <!-- Right Column: Receipt Details -->
+    <div class="receipt-column">
+      <div class="receipt-header">
+        <h2>Land Request Receipt</h2>
+        <p>
+          Request ID: <strong>{{ land_request.pk }}</strong><br />
+          Date: <strong>{{ land_request.created_at|date:"M d, Y" }}</strong>
+        </p>
+      </div>
+
+      <!-- Personal Details Section -->
+      <div class="section">
+        <h4>Personal Details</h4>
+        <p><strong>Full Name:</strong> {{ land_request.full_name }}</p>
+        <p><strong>Email:</strong> {{ land_request.email }}</p>
+        <p><strong>Phone Number:</strong> {{ land_request.phone_number }}</p>
+        <p><strong>Aadhar Number:</strong> {{ land_request.aadhar_number }}</p>
+        <p><strong>Date of Birth:</strong> {{ land_request.dob }}</p>
+      </div>
+
+      <!-- Land Registration Details -->
+      <div class="section">
+        <h4>Land Registration Details</h4>
+        <p><strong>Owner Name:</strong> {{ land_request.owner_name }}</p>
+        <p><strong>Survey Number:</strong> {{ land_request.survey_number }}</p>
+        <p><strong>Area (sq. ft.):</strong> {{ land_request.area }}</p>
+        <p><strong>Address:</strong> {{ land_request.address }}</p>
+        <p><strong>State:</strong> {{ land_request.state }}</p>
+        <p><strong>City:</strong> {{ land_request.city }}</p>
+        <p><strong>Pincode:</strong> {{ land_request.pincode }}</p>
+      </div>
+
+      <!-- Nature -->
+      <div class="section">
+        <h4>Nature</h4>
+        <p>{{ land_request.get_nature_display }}</p>
+      </div>
+      <div class="section">
+  <h4>IPFS Upload Status</h4>
+  {% if land_request.ipfs_hash %}
+    <p style="color: green;">✅ Your document has been successfully uploaded to IPFS.</p>
+  {% else %}
+    <p style="color: red;">❌ Document upload to IPFS failed or is not available.</p>
+  {% endif %}
+</div>
+
+      <!-- Submit / Next Step -->
+      <div class="submit-btn-container">
+        <!-- 
+          For the form submission or redirect, 
+          replace '#' with your actual URL or 
+          use a Django form with a POST method.
+        -->
+        <form method="post" action="{% url 'submit_receipt' land_request.pk %}">
+          {% csrf_token %}
+          <input type="hidden" name="role" value="Clerk">
+          <button type="submit" class="btn btn-primary">
+            Submit Receipt to Clerk
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  
+  
+   {% endblock %}

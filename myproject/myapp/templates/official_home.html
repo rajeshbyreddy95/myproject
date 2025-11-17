@@ -1,0 +1,1093 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Land Records - Clerk Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+      }
+      
+      body {
+        background-color: #f5f5f5;
+        overflow-x: hidden;
+      }
+      
+      /* Header styles */
+      .header {
+        background-color: #4cb4e7;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        height: 70px;
+      }
+      
+      .logo-container {
+        display: flex;
+        align-items: center;
+      }
+      
+      .logo-container img {
+        height: 40px;
+        width: 40px;
+        margin-right: 10px;
+      }
+      
+      .title {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      
+      .header-right {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      
+      /* Top navigation */
+      .top-nav {
+        background-color: #4cb4e7;
+        color: white;
+        display: flex;
+        justify-content: flex-end;
+        padding: 5px 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      
+      .top-nav-item {
+        display: flex;
+        align-items: center;
+        margin-left: 15px;
+        cursor: pointer;
+      }
+      
+      .top-nav-item i {
+        margin-right: 5px;
+      }
+      
+      /* Main layout */
+      .main-container {
+        display: flex;
+        height: calc(100vh - 110px);
+      }
+      
+      /* Sidebar */
+      .sidebar {
+        width: 180px;
+        background-color: #4cb4e7;
+        color: white;
+        padding-top: 20px;
+      }
+      
+      .user-profile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      
+      .user-avatar {
+        width: 80px;
+        height: 80px;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      
+      .user-avatar i {
+        font-size: 40px;
+        color: #666;
+      }
+      
+      .user-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      
+      .sidebar-menu {
+        list-style: none;
+      }
+      
+      .sidebar-menu li {
+        margin-bottom: 2px;
+      }
+      
+      .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.3s;
+      }
+      
+      .sidebar-menu a:hover, .sidebar-menu a.active {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      
+      .sidebar-menu i {
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+      }
+      
+      /* Content area */
+      .content {
+        flex: 1;
+        padding: 20px;
+        background-color: #f5f5f5;
+        overflow: auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 20px;
+      }
+      
+      .panel {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      
+      .panel-header {
+        background-color: #4cb4e7;
+        color: white;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      
+      .panel-title {
+        font-weight: bold;
+      }
+      
+      .panel-controls {
+        display: flex;
+        gap: 10px;
+      }
+      
+      .panel-controls i {
+        cursor: pointer;
+      }
+      
+      .panel-content {
+        padding: 10px;
+        height: calc(100% - 40px);
+        overflow: auto;
+      }
+      
+      .panel-tabs {
+        display: flex;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      .panel-tab {
+        padding: 8px 15px;
+        cursor: pointer;
+        background-color: #f0f0f0;
+        border-right: 1px solid #ddd;
+      }
+      
+      .panel-tab.active {
+        background-color: white;
+        border-bottom: 2px solid #4cb4e7;
+      }
+      
+      .no-records {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        color: #666;
+      }
+      
+      /* Footer */
+      .footer {
+        background-color: #4cb4e7;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        font-size: 12px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+      }
+      
+      /* Callout */
+      .callout {
+        position: absolute;
+        background-color: #ff7f50;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-weight: bold;
+        z-index: 100;
+      }
+      
+      .callout-arrow {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        z-index: 99;
+      }
+      
+      /* Specific panel styles */
+      #eFile {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+      }
+      
+      #notes {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+      }
+      
+      #team {
+        grid-column: 3 / 4;
+        grid-row: 1 / 2;
+      }
+      
+      #todoList {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+      }
+      
+      #noticeBoard {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+      }
+      
+      /* Connect section */
+      .connect-section {
+        grid-column: 3 / 4;
+        grid-row: 2 / 3;
+        background-color: #e6f7ff;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      
+      .connect-header {
+        background-color: #4cb4e7;
+        color: white;
+        padding: 10px;
+        font-weight: bold;
+      }
+      
+      .connect-list {
+        list-style: none;
+      }
+      
+      .connect-item {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+      }
+      
+      .connect-item i {
+        margin-right: 10px;
+        color: #4cb4e7;
+      }
+      
+      /* Modal styles */
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      
+      .modal-content {
+        background-color: white;
+        border-radius: 5px;
+        width: 500px;
+        max-width: 90%;
+        max-height: 90%;
+        overflow: auto;
+      }
+      
+      .modal-header {
+        background-color: #4cb4e7;
+        color: white;
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .modal-body {
+        padding: 15px;
+      }
+      
+      .close-button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+      }
+      
+      /* eLand Dashboard Styles */
+      #eLandDashboard {
+        width: 100%;
+        min-height: calc(100vh - 140px);
+        background-color: #f5f5f5;
+        position: relative;
+      }
+      
+      .eland-nav-bar {
+        background-color: #333;
+        color: white;
+        display: flex;
+        padding: 0;
+        border-bottom: 1px solid #444;
+      }
+      
+      .eland-nav-section {
+        display: flex;
+        align-items: center;
+      }
+      
+      .eland-nav-item {
+        padding: 8px 15px;
+        cursor: pointer;
+        font-size: 14px;
+        border-right: 1px solid #444;
+      }
+      
+      #eLandBackButton {
+        background-color: #0056b3;
+        color: white;
+      }
+      
+      #eLandBackButton:hover {
+        background-color: #003d7a;
+      }
+      
+      .eland-nav-item.header-item {
+        font-weight: bold;
+        cursor: default;
+        background-color: #444;
+      }
+      
+      .eland-content {
+        display: flex;
+        min-height: calc(100vh - 170px);
+        height: calc(100% - 80px);
+        overflow: auto;
+      }
+      
+      .eland-sidebar {
+        width: 50px;
+        background-color: #0056b3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 20px;
+      }
+      
+      .eland-sidebar-icon {
+        color: white;
+        font-size: 20px;
+        margin-bottom: 25px;
+        cursor: pointer;
+      }
+      
+      .eland-dashboard-content {
+        flex: 1;
+        background-color: #f5f5f5;
+        padding: 0;
+      }
+      
+      .clerk-header {
+        background-color: #f0f0f0;
+        padding: 10px 20px;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      .clerk-header h2 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      
+      .eland-tabs {
+        display: flex;
+        background-color: #f5f5f5;
+      }
+      
+      .eland-tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 14px;
+        border-right: 1px solid #ddd;
+        position: relative;
+      }
+      
+      .eland-tab.active {
+        background-color: #0056b3;
+        color: white;
+      }
+      
+      .eland-tab.active::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background-color: #0056b3;
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+      }
+      
+      .eland-tab-content {
+        padding: 15px;
+      }
+      
+      .eland-data-section {
+        background-color: white;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+      }
+      
+      .eland-data-section p {
+        color: #666;
+      }
+      
+      .eland-details-section {
+        background-color: white;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+      }
+      
+      .eland-section-header {
+        background-color: #0056b3;
+        color: white;
+        padding: 8px 15px;
+        font-size: 14px;
+      }
+      
+      .eland-details-content {
+        padding: 15px;
+        min-height: 80px;
+      }
+      
+      .eland-roles-content {
+        padding: 15px;
+        min-height: 40px;
+      }
+      
+      .eland-roles-history {
+        text-align: right;
+        padding: 5px 15px;
+        font-size: 12px;
+        color: #666;
+        cursor: pointer;
+        background-color: #f9f9f9;
+        border-top: 1px solid #eee;
+      }
+      
+      .eland-alerts-content {
+        padding: 15px;
+      }
+      
+      .eland-alerts-container {
+        background-color: white;
+        border: 1px solid #ddd;
+      }
+      
+      .eland-alert-tabs {
+        display: flex;
+        background-color: #f5f5f5;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      .eland-alert-tab {
+        padding: 8px 15px;
+        font-size: 14px;
+        border-right: 1px solid #ddd;
+      }
+      
+      .eland-alert-content {
+        min-height: 200px;
+        padding: 15px;
+      }
+      
+      .eland-footer {
+        background-color: #f5f5f5;
+        text-align: right;
+        padding: 10px 20px;
+        font-size: 12px;
+        color: #666;
+        border-top: 1px solid #ddd;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+      
+      /* Callouts for eLand dashboard */
+      .eland-callout {
+        position: absolute;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-weight: bold;
+        z-index: 100;
+      }
+      
+      .green-callout {
+        background-color: #90ee90;
+        color: #333;
+        top: 150px;
+        left: 400px;
+      }
+      
+      .gray-callout {
+        background-color: #a9a9a9;
+        color: white;
+        top: 250px;
+        left: 300px;
+      }
+      
+      .yellow-callout {
+        background-color: #ffff00;
+        color: #333;
+        top: 150px;
+        right: 100px;
+      }
+      
+      .pink-callout {
+        background-color: #ffc0cb;
+        color: #333;
+        top: 350px;
+        left: 300px;
+      }
+    </style>
+    <script>
+      function showDashboardSection(sectionId) {
+        // Hide all sections first
+        const sections = document.querySelectorAll(".content > div");
+        sections.forEach((section) => {
+          section.style.display = "none";
+        });
+
+        // Show the selected section
+        switch (sectionId) {
+          case "pendingApplications":
+            document.getElementById(
+              "pendingApplicationsSection"
+            ).style.display = "block";
+            break;
+          case "documentVerification":
+            document.getElementById(
+              "documentVerificationSection"
+            ).style.display = "block";
+            break;
+          case "recordManagement":
+            document.getElementById("recordManagementSection").style.display =
+              "block";
+            break;
+          case "reports":
+            document.getElementById("reportsSection").style.display = "block";
+            break;
+          case "tasks":
+            document.getElementById("tasksSection").style.display = "block";
+            break;
+          case "communications":
+            document.getElementById("communicationsSection").style.display =
+              "block";
+            break;
+        }
+      }
+
+      function handleApplicationProcess(applicationId) {
+        // Implementation for processing applications
+        alert(`Processing application ${applicationId}`);
+      }
+
+      function handleDocumentVerification(documentId) {
+        // Implementation for document verification
+        alert(`Verifying document ${documentId}`);
+      }
+
+      function updateApplicationStatus(applicationId, status) {
+        // Implementation for updating application status
+        alert(`Updating application ${applicationId} to ${status}`);
+      }
+
+      function generateReport(reportType) {
+        // Implementation for generating reports
+        alert(`Generating ${reportType} report`);
+      }
+
+      function showNotifications() {
+        // Create and show notifications panel
+        const modal = document.createElement("div");
+        modal.className = "modal";
+        modal.innerHTML = `
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2><i class="fas fa-bell"></i> Notifications</h2>
+              <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="notifications-panel">
+                <div class="notification-list">
+                  <div class="notification-item">
+                    <i class="fas fa-file-alt"></i>
+                    <div class="notification-content">
+                      <div class="notification-title">New Application Received</div>
+                      <div class="notification-time">2 minutes ago</div>
+                    </div>
+                  </div>
+                  <div class="notification-item">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="notification-content">
+                      <div class="notification-title">Document Verification Required</div>
+                      <div class="notification-time">1 hour ago</div>
+                    </div>
+                  </div>
+                  <!-- Add more notification items as needed -->
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+      }
+
+      function showTasks() {
+        // Create and show tasks panel
+        const modal = document.createElement("div");
+        modal.className = "modal";
+        modal.innerHTML = `
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2><i class="fas fa-tasks"></i> Tasks</h2>
+              <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="task-list">
+                <div class="task-item">
+                  <input type="checkbox" id="task1">
+                  <label for="task1">Review pending applications</label>
+                  <span class="task-date">Today</span>
+                </div>
+                <div class="task-item">
+                  <input type="checkbox" id="task2">
+                  <label for="task2">Verify submitted documents</label>
+                  <span class="task-date">Today</span>
+                </div>
+                <div class="task-item">
+                  <input type="checkbox" id="task3">
+                  <label for="task3">Generate monthly report</label>
+                  <span class="task-date">Tomorrow</span>
+                </div>
+                <!-- Add more task items as needed -->
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+      }
+
+      function showProfile() {
+        // Create and show profile panel
+        const modal = document.createElement("div");
+        modal.className = "modal";
+        modal.innerHTML = `
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2><i class="fas fa-user"></i> Profile</h2>
+              <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="profile-panel">
+                <div class="profile-content">
+                  <div class="profile-info">
+                    <div class="profile-avatar">
+                      <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h4>Clerk Name</h4>
+                    <p>IDTA Office</p>
+                  </div>
+                  <div class="profile-details">
+                    <div class="detail-item">
+                      <label>Employee ID</label>
+                      <input type="text" value="CLK001" readonly>
+                    </div>
+                    <div class="detail-item">
+                      <label>Email</label>
+                      <input type="email" value="clerk@idta.gov.in" class="editable">
+                    </div>
+                    <div class="detail-item">
+                      <label>Phone</label>
+                      <input type="tel" value="+91 9876543210" class="editable">
+                    </div>
+                    <div class="detail-item">
+                      <label>Department</label>
+                      <input type="text" value="Land Records" readonly>
+                    </div>
+                  </div>
+                  <button class="edit-profile-button">
+                    <i class="fas fa-edit"></i> Edit Profile
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Add event listener for edit profile button
+        const editButton = modal.querySelector(".edit-profile-button");
+        const editableInputs = modal.querySelectorAll(".editable");
+        editButton.addEventListener("click", function () {
+          if (this.textContent.includes("Edit")) {
+            editableInputs.forEach((input) =>
+              input.removeAttribute("readonly")
+            );
+            this.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+          } else {
+            editableInputs.forEach((input) =>
+              input.setAttribute("readonly", true)
+            );
+            this.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
+            // Here you would typically save the changes to a server
+            alert("Profile changes saved successfully!");
+          }
+        });
+      }
+
+      function handleLogout() {
+        if (confirm("Are you sure you want to logout?")) {
+          // Clear any session storage or cookies if needed
+          window.location.href = "index.html";
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Add click event for eLand link
+        const eLandLink = document.getElementById('eLandLink');
+        if (eLandLink) {
+          eLandLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Hide the main container
+            document.querySelector('.main-container').style.display = 'none';
+            // Show the eLand dashboard
+            document.getElementById('eLandDashboard').style.display = 'block';
+          });
+        }
+        
+        // Add click event for Home link to go back to main dashboard
+        const homeLink = document.querySelector('.sidebar-menu a.active');
+        if (homeLink) {
+          homeLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Show the main container
+            document.querySelector('.main-container').style.display = 'flex';
+            // Hide the eLand dashboard
+            document.getElementById('eLandDashboard').style.display = 'none';
+          });
+        }
+        
+        // Add click event for back button in eLand dashboard
+        const viewButton = document.getElementById('viewButton');
+        if (viewButton) {
+            viewButton.addEventListener('click', function() {
+            // Show the main container
+            document.querySelector('.main-container').style.display = 'flex';
+            // Hide the eLand dashboard
+            document.getElementById('eLandDashboard').style.display = 'none';
+          });
+        }
+        
+        // Handle tab switching in eLand dashboard
+        const elandTabs = document.querySelectorAll('.eland-tab');
+        const elandTabContent = document.querySelector('.eland-tab-content');
+        const elandAlertsContent = document.querySelector('.eland-alerts-content');
+        
+        elandTabs.forEach(tab => {
+          tab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            elandTabs.forEach(t => t.classList.remove('active'));
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            // Show appropriate content based on tab
+            if (this.textContent === 'File Details') {
+              elandTabContent.style.display = 'block';
+              elandAlertsContent.style.display = 'none';
+            } else if (this.textContent === 'Alerts & Notifications') {
+              elandTabContent.style.display = 'none';
+              elandAlertsContent.style.display = 'block';
+            }
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-container">
+        <img src="{% static "img/earth.png" %}" alt="Logo" />
+        <span class="title">E - Land Records</span>
+      </div>
+      <div class="header-right">
+        Land Record Management
+      </div>
+    </div>
+
+    <!-- Top Navigation -->
+    <div class="top-nav">
+      <div class="top-nav-item" onclick="showProfile()">
+        <i class="fas fa-user-circle"></i>
+        <span>Set Status</span>
+      </div>
+      <div class="top-nav-item" onclick="showNotifications()">
+        <i class="fas fa-bell"></i>
+        <span>Alerts</span>
+      </div>
+      <div class="top-nav-item" onclick="showProfile()">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </div>
+      <div class="top-nav-item" onclick="handleLogout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+      <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="user-profile">
+          <div class="user-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="user-name">{{user.designation}}</div>
+          <div class="user-role">{{user.get_full_name}}</div>
+        </div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="#" class="active">
+              <i class="fas fa-home"></i>
+              <span>Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url "official_eLand" %}">
+              <i class="fas fa-file-alt"></i>
+              <span>eLand</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fas fa-tasks"></i>
+              <span>Track Application</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fas fa-envelope"></i>
+              <span>Mail</span>
+          </a>
+        </li>
+        <li>
+            <a href="#">
+              <i class="fas fa-cogs"></i>
+              <span>Other Services</span>
+          </a>
+        </li>
+        <li>
+            <a href="#">
+              <i class="fas fa-clipboard-list"></i>
+              <span>Tasks</span>
+          </a>
+        </li>
+        <li>
+            <a href="#">
+              <i class="fas fa-check-square"></i>
+              <span>To do list</span>
+          </a>
+        </li>
+        <li>
+            <a href="#">
+              <i class="fas fa-sticky-note"></i>
+              <span>Notes</span>
+          </a>
+        </li>
+        <li>
+            <a href="#">
+              <i class="fas fa-download"></i>
+              <span>Download Forms</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+      <!-- Content Area -->
+    <div class="content">
+        <!-- eFile Panel -->
+        <div id="eFile" class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-file-alt"></i> eFile
+            </div>
+            <div class="panel-controls">
+              <i class="fas fa-search"></i>
+              <i class="fas fa-sync-alt"></i>
+              <i class="fas fa-question-circle"></i>
+            </div>
+          </div>
+          <div class="panel-content">
+            <div class="panel-tabs">
+              <div class="panel-tab active">eFile</div>
+              <div class="panel-tab">Receipts</div>
+        </div>
+            <div class="no-records">
+              <p>No record found.</p>
+        </div>
+          </div>
+        </div>
+
+        <!-- Notes Panel -->
+        <div id="notes" class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-sticky-note"></i> Notes
+            </div>
+            <div class="panel-controls">
+              <i class="fas fa-search"></i>
+              <i class="fas fa-plus"></i>
+              <i class="fas fa-sync-alt"></i>
+              <i class="fas fa-question-circle"></i>
+            </div>
+                  </div>
+          <div class="panel-content">
+            <div class="no-records">
+              <p>No Record Found</p>
+        </div>
+      </div>
+        </div>
+
+        <!-- Team Panel -->
+        <div id="team" class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-users"></i> Team
+        </div>
+            <div class="panel-controls">
+              <i class="fas fa-search"></i>
+              <i class="fas fa-sync-alt"></i>
+              <i class="fas fa-question-circle"></i>
+            </div>
+          </div>
+          <div class="panel-content">
+            <!-- Team content here -->
+          </div>
+        </div>
+
+        <!-- To Do List Panel -->
+        <div id="todoList" class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-check-square"></i> To Do List
+            </div>
+            <div class="panel-controls">
+              <i class="fas fa-plus"></i>
+              <i class="fas fa-sync-alt"></i>
+              <i class="fas fa-question-circle"></i>
+            </div>
+          </div>
+          <div class="panel-content">
+            <div class="no-records">
+              <p>No Record Found</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notice Board Panel -->
+        <div id="noticeBoard" class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-bullhorn"></i> Notice Board
+            </div>
+            <div class="panel-controls">
+              <i class="fas fa-sync-alt"></i>
+              <i class="fas fa-question-circle"></i>
+              <i class="fas fa-ellipsis-v"></i>
+            </div>
+          </div>
+          <div class="panel-content">
+            <div class="panel-tabs">
+              <div class="panel-tab active">Notice Board</div>
+              <div class="panel-tab">Central Docs</div>
+              <div class="panel-tab">My Docs</div>
+      </div>
+            <!-- Notice board content here -->
+        </div>
+        </div>
+
+        <!-- Connect Section -->
+        <div class="connect-section">
+          <div class="connect-header">Connect</div>
+          <ul class="connect-list">
+            <li class="connect-item">
+              <i class="fas fa-address-book"></i>
+              <span>Directory</span>
+            </li>
+            <li class="connect-item">
+              <i class="fas fa-video"></i>
+              <span>VC Room</span>
+            </li>
+            <li class="connect-item">
+              <i class="fas fa-bolt"></i>
+              <span>Quick Connect</span>
+            </li>
+            <li class="connect-item">
+              <i class="fas fa-calendar-alt"></i>
+              <span>Events</span>
+            </li>
+            <li class="connect-item">
+              <i class="fas fa-users"></i>
+              <span>My Contacts/Group</span>
+            </li>
+          </ul>
+        </div>
+        </div>
+      </div>
+
+  
+
+    <!-- Footer -->
+    <div class="footer">
+      Design & developed by National Institute of Technology @ 2025 | Disclaimer | Terms & Conditions | Version
+    </div>
+  </body>
+</html>

@@ -1,0 +1,341 @@
+{% extends "base_eLand.html" %}
+{% load static %}
+
+{% block css %}
+
+.inbox-page {
+    margin: 25px;
+    padding: 25px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.7s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Toolbar Buttons */
+.inbox-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.action-button {
+    background: linear-gradient(135deg, #4dd0e1, #0277bd);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(77,208,225,0.45);
+    transition: 0.3s ease;
+}
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(77,208,225,0.7);
+}
+
+/* Filter Row */
+.sent-actions {
+    padding: 12px 18px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    margin-bottom: 18px;
+}
+
+.dropdown-select {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 7px 10px;
+    border-radius: 7px;
+    color: #ffffff;
+    min-width: 130px;
+    outline: none;
+}
+
+/* TABLE DESIGN */
+.sent-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255,255,255,0.03);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.sent-table th {
+    background: linear-gradient(135deg, #0d47a1, #001e3c);
+    color: #f5c84c;
+    text-shadow: 0 0 8px rgba(245,200,76,0.5);
+    padding: 12px;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+
+.sent-table td {
+    padding: 12px;
+    color: #e8e9ea;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.sent-table tr:hover {
+    background: rgba(77,208,225,0.1);
+}
+
+/* Buttons inside table */
+.btn-outline-primary {
+    background: transparent !important;
+    border: 1px solid #4dd0e1 !important;
+    color: #4dd0e1 !important;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+.btn-outline-primary:hover {
+    background: rgba(77,208,225,0.2) !important;
+}
+
+.btn-outline-success {
+    border: 1px solid #8bc34a !important;
+    color: #8bc34a !important;
+}
+.btn-outline-success:hover {
+    background: rgba(139,195,74,0.25) !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #0288d1, #01579b);
+    border: none;
+    padding: 6px 14px;
+    color: #fff;
+    border-radius: 7px;
+    font-weight: 600;
+}
+
+/* Footer Section */
+.sent-footer {
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #d9dee5;
+}
+
+.records-count {
+    color: #4dd0e1;
+    font-weight: 600;
+}
+
+/* Pagination */
+.page-button {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    margin-right: 5px;
+    border-radius: 7px;
+}
+.page-button.active {
+    background: #4dd0e1;
+    color: #012234;
+    font-weight: 700;
+}
+
+/* Modal theme */
+.modal-content {
+    background: #0d1b2a;
+    color: #edf2f8;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.modal-header {
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.modal-title {
+    color: #4dd0e1;
+}
+.btn-close {
+    filter: invert(1);
+}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="inbox-page">
+
+  <!-- Toolbar -->
+  <div class="inbox-toolbar">
+    <button class="action-button">Mark as Read</button>
+    <button class="action-button">Delete</button>
+  </div>
+
+  <!-- Filter -->
+  <div class="sent-actions">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <input type="checkbox" class="inbox-checkbox">
+
+      <label class="text-light">Search Here...</label>
+
+      <select class="dropdown-select">
+        <option>Show All</option>
+      </select>
+
+      <select class="dropdown-select">
+        <option>Unread</option>
+        <option>Read</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Inbox Table -->
+  <div class="sent-container">
+    <table class="sent-table">
+      <thead>
+        <tr>
+          <th><input type="checkbox"></th>
+          <th>Comp. No.</th>
+          <th>File No.</th>
+          <th>Subject</th>
+          <th>Status</th>
+          <th>Currently With</th>
+          <th>Created At</th>
+          <th>Actions</th>
+          <th>History</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for msg in messages_list %}
+        <tr data-message-id="{{ msg.id }}">
+          <td><input type="checkbox"></td>
+          <td>{{ msg.receipt_number }}</td>
+          <td>{{ msg.file_no }}</td>
+          <td>{{ msg.subject }}</td>
+          <td>{{ msg.get_status_display }}</td>
+          <td>{{ msg.currently_with.designation|upper }}</td>
+          <td>{{ msg.created_at|date:"Y-m-d" }}</td>
+          <td>
+              {% if msg.receipt %}
+              <a href="{{ msg.receipt.url }}" target="_blank" class="btn btn-outline-primary btn-sm mb-1">📄 Receipt</a><br>
+              {% else %}
+              <span class="text-muted">No Receipt</span><br>
+              {% endif %}
+
+              {% if msg.document %}
+              <a href="{{ msg.document.url }}" target="_blank" class="btn btn-outline-primary btn-sm mb-1">📎 Document</a><br>
+              {% else %}
+              <span class="text-muted">No Document</span><br>
+              {% endif %}
+
+              {% if msg.patta %}
+              <a href="{{ msg.patta.url }}" target="_blank" class="btn btn-outline-success btn-sm">🧾 Patta</a>
+              {% endif %}
+          </td>
+
+          <td>
+            <button class="btn btn-primary btn-sm view-history-btn" data-request-id="{{ msg.id }}">
+              View History
+            </button>
+          </td>
+        </tr>
+
+        <!-- Hidden history block -->
+        <tr style="display:none;">
+          <td colspan="9">
+            <div id="history-{{ msg.id }}">
+              <h5 class="text-info">History of {{ msg.comp_no }}</h5>
+              <table class="table table-bordered table-dark">
+                <thead>
+                  <tr>
+                    <th>Sent By</th>
+                    <th>Sent To</th>
+                    <th>Date</th>
+                    <th>Remarks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for entry in msg.history.all|dictsortreversed:"timestamp" %}
+                    <tr>
+                      <td>{{ entry.from_user.designation|default:"-"|upper }}</td>
+                      <td>{{ entry.to_user.designation|default:"-"|upper }}</td>
+                      <td>{{ entry.timestamp|date:"Y-m-d H:i" }}</td>
+                      <td>{{ entry.remarks|default:"No remarks" }}</td>
+                    </tr>
+                  {% empty %}
+                    <tr><td colspan="4" class="text-center">No history found</td></tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+
+        {% empty %}
+        <tr><td colspan="9" class="text-center p-4">No Messages Found</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <div class="sent-footer">
+    <div class="records-count">Total Messages: {{ messages_list|length }}</div>
+
+    <div class="pagination">
+      <button class="page-button">«</button>
+      <button class="page-button active">1</button>
+      <button class="page-button">»</button>
+
+      <span>Page</span>
+      <select class="dropdown-select">
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- History Modal -->
+<div class="modal fade" id="historyModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="historyModalLabel">Request History</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="modalHistoryContent"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+    const modal = new bootstrap.Modal(document.getElementById("historyModal"));
+    const content = document.getElementById("modalHistoryContent");
+
+    document.querySelectorAll(".view-history-btn").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+            let id = btn.getAttribute("data-request-id");
+            content.innerHTML = document.getElementById("history-"+id).innerHTML;
+            modal.show();
+        });
+    });
+});
+</script>
+
+{% endblock %}

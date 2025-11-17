@@ -1,0 +1,262 @@
+{% extends "base_official_dashboard.html" %}
+
+{% block css %}
+
+.sent-page {
+    margin: 30px;
+    padding: 25px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity:0; transform: translateY(10px); }
+    to { opacity:1; transform: translateY(0); }
+}
+
+/* Toolbar */
+.sent-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    gap: 12px;
+}
+
+.action-button {
+    background: linear-gradient(135deg, #4dd0e1, #0288d1);
+    border: none;
+    padding: 10px 22px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(77,208,225,0.4);
+    transition: 0.3s ease;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(77,208,225,0.7);
+}
+
+/* Filter Row */
+.sent-actions {
+    background: rgba(255,255,255,0.05);
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    margin-bottom: 20px;
+    color: #e6e9ee;
+}
+
+.dropdown-select {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 8px;
+    outline: none;
+    min-width: 130px;
+}
+
+/* TABLE */
+.sent-container {
+    margin-top: 15px;
+}
+
+.sent-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.sent-table th {
+    background: linear-gradient(135deg, #0d47a1, #001c40);
+    padding: 12px;
+    color: #f5c84c;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    text-shadow: 0 0 6px rgba(245,200,76,0.6);
+}
+
+.sent-table td {
+    padding: 12px;
+    color: #e8e9ed;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.sent-table tr:hover {
+    background: rgba(77,208,225,0.08);
+    transition: 0.25s ease;
+}
+
+/* View button */
+.btn-info {
+    background: linear-gradient(135deg, #8bc34a, #4caf50);
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 0 8px rgba(76,175,80,0.4);
+}
+.btn-info:hover {
+    box-shadow: 0 0 12px rgba(76,175,80,0.7);
+}
+
+/* Footer */
+.sent-footer {
+    margin-top: 15px;
+    padding: 15px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #e8e9ed;
+}
+
+.records-count {
+    font-weight: 600;
+    color: #4dd0e1;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-button {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.page-button.active {
+    background: #4dd0e1;
+    color: #001c40;
+    font-weight: 700;
+}
+
+.page-button:hover {
+    background: rgba(77,208,225,0.3);
+}
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div id="sentPage" class="sent-page">
+
+  <!-- Toolbar -->
+  <div class="sent-toolbar">
+    <button class="action-button" id="createPartButton">Create Part</button>
+    <button class="action-button" id="pullBackButton">Pull Back</button>
+  </div>
+
+  <!-- Filter Row -->
+  <div class="sent-actions">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <input type="checkbox" class="sent-checkbox">
+      <label>Search Here:</label>
+
+      <select class="dropdown-select">
+        <option>Show Shared Sent</option>
+      </select>
+
+      <select class="dropdown-select">
+        <option>Choose One</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="sent-container">
+    <table class="sent-table">
+      <thead>
+        <tr>
+          <th><input type="checkbox"></th>
+          <th>Comp. No.</th>
+          <th>File No.</th>
+          <th>Subject</th>
+          <th>Sent To</th>
+          <th>Sent On</th>
+          <th>Currently With</th>
+          <th>Due On</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody id="sentTableBody">
+        {% for receipt in receipts %}
+        <tr data-receipt-id="{{ receipt.id }}">
+          <td><input type="checkbox"></td>
+          <td>{{ receipt.comp_no }}</td>
+          <td>{{ receipt.file_no }}</td>
+          <td>{{ receipt.subject }}</td>
+          <td>{{ receipt.sent_to }}</td>
+          <td>{{ receipt.created_at|date:"Y-m-d" }}</td>
+          <td>{{ receipt.currently_with }}</td>
+          <td>{{ receipt.due_on|date:"Y-m-d" }}</td>
+          <td>
+            {% if receipt.receipt %}
+              <button class="btn-info" onclick="openPdfInline('{{ receipt.receipt.url }}')">View</button>
+            {% else %}
+              <span>No Receipt</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="9" style="text-align:center; padding:20px;">No Record(s) Found</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Inline PDF viewer -->
+    <div id="pdfDisplayArea" style="display:none; margin-top:20px;">
+      <iframe id="pdfIframe" src="" style="width:100%; height:600px;" frameborder="0"></iframe>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="sent-footer">
+    <div class="records-count">Total Records: {{ receipts|length }}</div>
+
+    <div class="pagination">
+      <button class="page-button">«</button>
+      <button class="page-button active">1</button>
+      <button class="page-button">»</button>
+
+      <span>Page</span>
+      <select class="dropdown-select">
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+      </select>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function openPdfInline(url) {
+    document.getElementById("pdfIframe").src = url;
+    document.getElementById("pdfDisplayArea").style.display = "block";
+}
+</script>
+
+{% endblock %}

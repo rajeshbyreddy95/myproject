@@ -1,0 +1,1256 @@
+<django.db.models.fields.CharField>
+<django.db.models.fields.CharField>
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2025-10-26T19:39:44.831Z",
+    "user": 4,
+    "content_type": 7,
+    "object_id": "2",
+    "object_repr": "clerk - clerk",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2025-11-01T12:37:56.422Z",
+    "user": 4,
+    "content_type": 7,
+    "object_id": "5",
+    "object_repr": "sup - sup",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "4km7vqwfebxn0jvktm2xmcqt9ngyy7yn",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSFQ3i7d-w1kZgCpGkhKuzL-uzbpQrf3nHNfLMK21riNvMQ5sTNT7PS7IdAjtx2kO7Rb59TbuszId4UfdPBrT_l5Ody_gwqjfmsbrHOY5EQeigSdQ_EGQVmHjqS2IAoKHYQK3ggCIyGRR7JIwZrsJ_b-AOY7OAo:1vFGSr:X2WNsLmwCacs-gYDjaZDkY5ffZYv7QtkTy21mf9Yw6Y",
+    "expire_date": "2025-11-15T18:36:37.265Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "f44vpyefgb02cdbgggpdfo25kusbu2oj",
+  "fields": {
+    "session_data": ".eJxVjDsOwyAQBe9CHSHbLCykTO8zWMtng5MIJGNXUe4eIblI2jcz7y0WOva8HC1tyxrFVYzi8rt5Cs9UOogPKvcqQy37tnrZFXnSJuca0-t2un8HmVrutTagByCagImiGtChTcYajwnRO1JAHDQiaiZEZhyDhYmNRQVOkfh8Ad39N5k:1vDLKn:oP_3dIWG-zneea8rx0Eh0n4cP23il4exgPgXLC5nWR0",
+    "expire_date": "2025-11-10T11:24:21.645Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "gbdkiq55esvygy4b1r7gtt3pqf19ia41",
+  "fields": {
+    "session_data": ".eJxVjMEOwiAQRP-FsyEFWmQ9evcbyC4LUjWQlPZk_Hdp0oPO8c2beQuP25r91uLiZxYXYcXplxGGZyx7wQ8s9ypDLesyk9wVebRN3irH1_Vw_w4yttzXiml0BBwUGBcGOGtUjggsJkKjpx6LaBImCEA6ucgKOlZm0uOAID5f8Lo32A:1vFCzI:YJx6x5sZ0_IOly7PjXJbRgGd14TIkLTdQgDeI9t7Vfw",
+    "expire_date": "2025-11-15T14:53:52.725Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "os84sisbebbt2atx6kmetcvvhr3n6bin",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCgAQaX7j0DGZhBqgaS0q6Md9cmXej2v_f-S0Tc1hq3wUucSZyFFqffLWF-cNsB3bHdusy9rcuc5K7Igw557cTPy-H-HVQc9VtDVi4EZ0Lm7C0kDaUUrzw46_1kTUKYnKEUDBgOpHUhw5g9KVLIOon3B89aN-g:1vFGxC:kLMDhpsVS5at8R0wlairByt9URYKop0wJSJz9T-Ki9E",
+    "expire_date": "2025-11-15T19:07:58.462Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "zs3xvr0psxgigwoao624q91afkowtgyv",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSFQ3i7d-w1kZgCpGkhKuzL-uzbpQrf3nHNfLMK21riNvMQ5sTNT7PS7IdAjtx2kO7Rb59TbuszId4UfdPBrT_l5Ody_gwqjfmsbrHOY5EQeigSdQ_EGQVmHjqS2IAoKHYQK3ggCIyGRR7JIwZrsJ_b-AOY7OAo:1vD6du:HhKjq5Fm70pNKMGrNt-9KilyZLYaopk7A1uJLMNefIs",
+    "expire_date": "2025-11-09T19:43:06.022Z"
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$j4rzav7HtTGsWMgyY32Tnr$4QxA5IehRnN3yi9jwCC4TwkBGuS8AWdDIauHp/hCarw=",
+    "last_login": "2025-11-01T17:32:48.421Z",
+    "is_superuser": false,
+    "username": "user1",
+    "first_name": "B",
+    "last_name": "Rajesh",
+    "email": "rajeshbyreddy95@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-10-26T19:35:18.105Z",
+    "user_type": "individual",
+    "middle_name": "",
+    "dob": "2003-03-16",
+    "gender": "male",
+    "phone": "7075979652",
+    "aadhar": "453809358739",
+    "address": "",
+    "designation": null,
+    "department": null,
+    "office_id": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$5jGuuLIgxhn7Zgjse5WJFV$QA1cHkQKtwDePI/VC3TqWpBIapcy9oKjxd6aRefYU3U=",
+    "last_login": "2025-11-01T18:36:37.263Z",
+    "is_superuser": false,
+    "username": "clerk1",
+    "first_name": "Clerk",
+    "last_name": "clerk",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-10-26T19:37:49.732Z",
+    "user_type": "official",
+    "middle_name": "",
+    "dob": null,
+    "gender": "",
+    "phone": "345678",
+    "aadhar": null,
+    "address": "",
+    "designation": "clerk",
+    "department": "village_office",
+    "office_id": "clerk",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$ggGQKRl4xLIr1vn9iJiZoa$MoAuH/PoN5SmBRaPp1HGIYewuvsBVSg1RtNfY3Azb0k=",
+    "last_login": "2025-11-01T12:37:32.088Z",
+    "is_superuser": true,
+    "username": "rajeshbyreddy",
+    "first_name": "",
+    "last_name": "",
+    "email": "rajeshbyreddy95@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-10-26T19:39:15.207Z",
+    "user_type": "individual",
+    "middle_name": "",
+    "dob": null,
+    "gender": "",
+    "phone": "",
+    "aadhar": null,
+    "address": "",
+    "designation": null,
+    "department": null,
+    "office_id": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$22prL6pB1t8h5HhSuMSpn7$1aoB4rckRohrgR3NSd8gR+BPygWGrYTkqb6ONBxm7j8=",
+    "last_login": "2025-11-01T14:53:52.724Z",
+    "is_superuser": false,
+    "username": "sup",
+    "first_name": "superident",
+    "last_name": "sup",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-01T12:38:50.025Z",
+    "user_type": "official",
+    "middle_name": "",
+    "dob": null,
+    "gender": "",
+    "phone": "7075979652",
+    "aadhar": null,
+    "address": "",
+    "designation": "superintendent",
+    "department": "mandal_office",
+    "office_id": "sup1",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$wvLAFnDKWkt5C4IO2fXVKP$mEH5ldy33a9SSLIBNdipt8u5iGjKYWrkb1tKl6Ve3CA=",
+    "last_login": "2025-11-01T14:24:49.114Z",
+    "is_superuser": false,
+    "username": "project",
+    "first_name": "project",
+    "last_name": "officer",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-01T12:44:00.648Z",
+    "user_type": "official",
+    "middle_name": "",
+    "dob": null,
+    "gender": "",
+    "phone": "7075979652",
+    "aadhar": null,
+    "address": "",
+    "designation": "project_officer",
+    "department": "mandal_office",
+    "office_id": "project",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 8,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$Ct5vkw3sHYnblJ3DbYm4Cl$sylRTmjGx4eh3wYEESMHwBryb1cdKonnXudjLBPLXaI=",
+    "last_login": "2025-11-01T13:49:36.134Z",
+    "is_superuser": false,
+    "username": "user2",
+    "first_name": "Shiva",
+    "last_name": "shiva",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-01T13:49:27.271Z",
+    "user_type": "individual",
+    "middle_name": "",
+    "dob": "2025-11-13",
+    "gender": "male",
+    "phone": "7075979652",
+    "aadhar": "453809358736",
+    "address": "warangal",
+    "designation": null,
+    "department": null,
+    "office_id": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 9,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$JlGhspCIzSPLbub63MXGSg$uihRmd52KgIQleyh0IS80hsY0gSt+21IFpk/pFCTIF4=",
+    "last_login": "2025-11-01T14:30:26.708Z",
+    "is_superuser": false,
+    "username": "sur",
+    "first_name": "surveyor",
+    "last_name": "sur",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-01T14:22:16.794Z",
+    "user_type": "official",
+    "middle_name": "",
+    "dob": null,
+    "gender": "",
+    "phone": "7075979652",
+    "aadhar": null,
+    "address": "",
+    "designation": "surveyor",
+    "department": "mandal_office",
+    "office_id": "sur",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 10,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$pW5sRn6Ivwq9hAaN52bdEB$9YVWiXnpGXZqwEbE4Qa8Rj8QN+xci5UKdT+m6Lv8d7E=",
+    "last_login": "2025-11-01T14:27:09.349Z",
+    "is_superuser": false,
+    "username": "mro",
+    "first_name": "mro",
+    "last_name": "mro",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-01T14:24:16.564Z",
+    "user_type": "official",
+    "middle_name": "",
+    "dob": null,
+    "gender": "",
+    "phone": "7075979652",
+    "aadhar": null,
+    "address": "",
+    "designation": "mro",
+    "department": "mandal_office",
+    "office_id": "mro",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 11,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$Qg86hXdRiuG9eHTn5PJdnB$7zou+Lqiwhx7nWCwWR2MqmQPhUwfvjUJ+GhR988h37Y=",
+    "last_login": "2025-11-01T14:33:02.841Z",
+    "is_superuser": false,
+    "username": "revenue",
+    "first_name": "revenue",
+    "last_name": "inspector",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-01T14:29:35.415Z",
+    "user_type": "official",
+    "middle_name": "",
+    "dob": null,
+    "gender": "",
+    "phone": "7075979652",
+    "aadhar": null,
+    "address": "",
+    "designation": "revenue_inspector",
+    "department": "revenue",
+    "office_id": "revenue",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 12,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$1Qr817dWL8iizeACGn49dO$mTUCINKSmra9L3nQnA1TuKgfFnkbgir69MnmQA+1fcE=",
+    "last_login": "2025-11-01T14:36:38.236Z",
+    "is_superuser": false,
+    "username": "vro",
+    "first_name": "vro",
+    "last_name": "vro",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-01T14:32:40.170Z",
+    "user_type": "official",
+    "middle_name": "",
+    "dob": null,
+    "gender": "",
+    "phone": "7075979652",
+    "aadhar": null,
+    "address": "",
+    "designation": "vro",
+    "department": "village_office",
+    "office_id": "vro",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 13,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$VvuMI0X8SutYUePNaUcAoR$dgVsa1rKUebxm/UUViAitYCIX2m5MjwftoKIOAORKl8=",
+    "last_login": "2025-11-01T14:42:50.006Z",
+    "is_superuser": false,
+    "username": "revenue_dept",
+    "first_name": "revenue_dept",
+    "last_name": "rev",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-01T14:35:42.925Z",
+    "user_type": "official",
+    "middle_name": "",
+    "dob": null,
+    "gender": "",
+    "phone": "7075979652",
+    "aadhar": null,
+    "address": "",
+    "designation": "revenue_dept_officer",
+    "department": "revenue",
+    "office_id": "revenue_dept",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 14,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$WQiNKKKbcMix9sol1TdQEe$cQK96ABb4RojAVVq6owrZpcK86AWycmjf54cIBU9DIQ=",
+    "last_login": "2025-11-01T14:43:16.344Z",
+    "is_superuser": false,
+    "username": "jc",
+    "first_name": "jc",
+    "last_name": "jc",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-01T14:40:03.010Z",
+    "user_type": "official",
+    "middle_name": "",
+    "dob": null,
+    "gender": "",
+    "phone": "7075979652",
+    "aadhar": null,
+    "address": "",
+    "designation": "joint_collector",
+    "department": "revenue",
+    "office_id": "jc",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 15,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$JpNNaxYqg9QLLM67TBNKTy$ypO2aBbDwUhYmfHyjXUwCd4N7a7vpxCo8cX2YD64s5M=",
+    "last_login": "2025-11-01T14:43:44.005Z",
+    "is_superuser": false,
+    "username": "col",
+    "first_name": "col",
+    "last_name": "col",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-01T14:41:19.550Z",
+    "user_type": "official",
+    "middle_name": "",
+    "dob": null,
+    "gender": "",
+    "phone": "7075979652",
+    "aadhar": null,
+    "address": "",
+    "designation": "district_collector",
+    "department": "revenue",
+    "office_id": "col",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 16,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$9j5jjuAlzJhHdMSHaNb8OP$dkJVqj/cz9sVvn/uyJl8gIY2Jy96pZopiVby1xRtqQk=",
+    "last_login": "2025-11-01T14:44:16.265Z",
+    "is_superuser": false,
+    "username": "mw",
+    "first_name": "mw",
+    "last_name": "mw",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-01T14:42:32.557Z",
+    "user_type": "official",
+    "middle_name": "",
+    "dob": null,
+    "gender": "",
+    "phone": "7075979652",
+    "aadhar": null,
+    "address": "",
+    "designation": "ministry_welfare",
+    "department": "revenue",
+    "office_id": "mw",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.customuser",
+  "pk": 17,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$hhzKG4bLubeD0HpedrjZfl$X95zDvA1EP7FdylmQZyM7LhX9HZeCVlvYxODvtkaj04=",
+    "last_login": "2025-11-01T18:11:34.657Z",
+    "is_superuser": false,
+    "username": "user3",
+    "first_name": "user3",
+    "last_name": "user3",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-01T18:11:29.470Z",
+    "user_type": "individual",
+    "middle_name": "",
+    "dob": "2003-03-16",
+    "gender": "male",
+    "phone": "7075979652",
+    "aadhar": "453809358730",
+    "address": "warangal",
+    "designation": null,
+    "department": null,
+    "office_id": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "myapp.landrequest",
+  "pk": 1,
+  "fields": {
+    "txn_id": "TXN-EE778FCBD867",
+    "nature": "electronic",
+    "created_by": 1,
+    "full_name": "Byreddy Rajesh",
+    "email": "rajeshbyreddy95@gmail.com",
+    "phone_number": "56789op",
+    "aadhar_number": "34567890",
+    "dob": "2003-03-16",
+    "owner_name": "rajesh",
+    "survey_number": "1",
+    "area": "1",
+    "address": "warangal",
+    "state": "warangal",
+    "city": "warangal",
+    "pincode": "506004",
+    "document": "documents/IoT-PART-1.pdf",
+    "receipt": "receipts/receipt_1.pdf",
+    "patta": "pattas/patta_1.pdf",
+    "ipfs_hash": "973ba97c45e101516333afdd8636d00dadfe2458da00fb",
+    "receipt_number": "D0BF6B52C0",
+    "status": "approved",
+    "currently_with": null,
+    "created_at": "2025-10-26T19:41:43.034Z",
+    "comp_no": "LR-None",
+    "file_no": "1",
+    "subject": "Land Record Management",
+    "sent_to": null,
+    "due_on": "2025-11-25"
+  }
+},
+{
+  "model": "myapp.landrequest",
+  "pk": 2,
+  "fields": {
+    "txn_id": "TXN-CBD1D42008FF",
+    "nature": "electronic",
+    "created_by": 1,
+    "full_name": "Rajesh",
+    "email": "rajesh@gmail.com",
+    "phone_number": "7075979652",
+    "aadhar_number": "234567890",
+    "dob": "2002-06-17",
+    "owner_name": "Rajesh",
+    "survey_number": "12345",
+    "area": "1",
+    "address": "1",
+    "state": "ap",
+    "city": "warangal",
+    "pincode": "518422",
+    "document": "documents/A_Study_on_a_JWT-Based_User_Authentication_updated.pdf",
+    "receipt": "receipts/receipt_2.pdf",
+    "patta": "",
+    "ipfs_hash": "66c186269d160ff6bb46cbaef494feb81eb53e52a88e31",
+    "receipt_number": "6E4D959C9F",
+    "status": "superintendent_review",
+    "currently_with": 6,
+    "created_at": "2025-11-01T11:21:21.958Z",
+    "comp_no": "LR-None",
+    "file_no": "12345",
+    "subject": "Land Record Management",
+    "sent_to": null,
+    "due_on": "2025-12-01"
+  }
+},
+{
+  "model": "myapp.landrequest",
+  "pk": 3,
+  "fields": {
+    "txn_id": "TXN-D3C016C67A6E",
+    "nature": "electronic",
+    "created_by": 8,
+    "full_name": "shiva",
+    "email": "shiva@gmail.com",
+    "phone_number": "7075979652",
+    "aadhar_number": "453809358739",
+    "dob": "2002-11-10",
+    "owner_name": "shiva",
+    "survey_number": "1",
+    "area": "1",
+    "address": "warangal",
+    "state": "ap",
+    "city": "warangal",
+    "pincode": "518422",
+    "document": "documents/A_Study_on_a_JWT-Based_User_Authentication2.pdf",
+    "receipt": "receipts/receipt_3.pdf",
+    "patta": "",
+    "ipfs_hash": "0e31e9699f40fbea06a9ebd698bc0cd040541663386928",
+    "receipt_number": "68DAB326E7",
+    "status": "project_officer_review",
+    "currently_with": 7,
+    "created_at": "2025-11-01T13:50:28.261Z",
+    "comp_no": "LR-None",
+    "file_no": "1",
+    "subject": "Land Record Management",
+    "sent_to": null,
+    "due_on": "2025-12-01"
+  }
+},
+{
+  "model": "myapp.landrequest",
+  "pk": 4,
+  "fields": {
+    "txn_id": "TXN-FB2E067DF2DC",
+    "nature": "electronic",
+    "created_by": 1,
+    "full_name": "Koti",
+    "email": "br23mcf1r08@student.nitw.ac.in",
+    "phone_number": "3456789",
+    "aadhar_number": "3456789",
+    "dob": "2002-12-10",
+    "owner_name": "koti",
+    "survey_number": "1",
+    "area": "1",
+    "address": "wa",
+    "state": "wa",
+    "city": "wa",
+    "pincode": "518422",
+    "document": "documents/A_Study_on_a_JWT-Based_User_Authentication_updated_n7aWxF2.pdf",
+    "receipt": "receipts/receipt_4.pdf",
+    "patta": "",
+    "ipfs_hash": "6cb71a725d6f424a66e2a8cc75e7e6b15197a8313bbb64",
+    "receipt_number": "D9F5E1DCE9",
+    "status": "clerk_review",
+    "currently_with": 3,
+    "created_at": "2025-11-01T13:56:44.082Z",
+    "comp_no": "LR-None",
+    "file_no": "1",
+    "subject": "Land Record Management",
+    "sent_to": null,
+    "due_on": "2025-12-01"
+  }
+},
+{
+  "model": "myapp.landrequest",
+  "pk": 5,
+  "fields": {
+    "txn_id": "TXN-9D0D9B0F4F78",
+    "nature": "electronic",
+    "created_by": 1,
+    "full_name": "Byreddy Rajesh",
+    "email": "rajesh@gmail.com",
+    "phone_number": "23456789",
+    "aadhar_number": "1234567890",
+    "dob": "2002-12-10",
+    "owner_name": "rajesh",
+    "survey_number": "1",
+    "area": "1",
+    "address": "warangal",
+    "state": "ap",
+    "city": "ap",
+    "pincode": "518422",
+    "document": "documents/A_Study_on_a_JWT-Based_User_Authentication_updated_jgneYzS.pdf",
+    "receipt": "receipts/receipt_5.pdf",
+    "patta": "",
+    "ipfs_hash": "4b7c3dba359622968586801da599ee9741f667404e46b4",
+    "receipt_number": "2D94680E62",
+    "status": "clerk_review",
+    "currently_with": 3,
+    "created_at": "2025-11-01T17:34:08.845Z",
+    "comp_no": "LR-None",
+    "file_no": "1",
+    "subject": "Land Record Management",
+    "sent_to": null,
+    "due_on": "2025-12-01"
+  }
+},
+{
+  "model": "myapp.landrequest",
+  "pk": 6,
+  "fields": {
+    "txn_id": "TXN-A560CC326FC6",
+    "nature": "electronic",
+    "created_by": 1,
+    "full_name": "Byreddy Rajesh",
+    "email": "rajesh@gmail.com",
+    "phone_number": "23456789",
+    "aadhar_number": "1234567890",
+    "dob": "2002-12-10",
+    "owner_name": "rajesh",
+    "survey_number": "1",
+    "area": "1",
+    "address": "warangal",
+    "state": "ap",
+    "city": "ap",
+    "pincode": "518422",
+    "document": "documents/A_Study_on_a_JWT-Based_User_Authentication_updated_PNPK5vU.pdf",
+    "receipt": "receipts/receipt_6.pdf",
+    "patta": "",
+    "ipfs_hash": "17fb9d6efe8f2da5cd588ebdece62e7e947ecfef38953b",
+    "receipt_number": "63E39B8013",
+    "status": "clerk_review",
+    "currently_with": 3,
+    "created_at": "2025-11-01T17:35:40.019Z",
+    "comp_no": "LR-None",
+    "file_no": "1",
+    "subject": "Land Record Management",
+    "sent_to": null,
+    "due_on": "2025-12-01"
+  }
+},
+{
+  "model": "myapp.landrequest",
+  "pk": 7,
+  "fields": {
+    "txn_id": "TXN-3008D2622C5E",
+    "nature": "electronic",
+    "created_by": 1,
+    "full_name": "Byreddy Rajesh",
+    "email": "rajesh@gmail.com",
+    "phone_number": "23456789",
+    "aadhar_number": "1234567890",
+    "dob": "2002-12-10",
+    "owner_name": "rajesh",
+    "survey_number": "1",
+    "area": "1",
+    "address": "warangal",
+    "state": "ap",
+    "city": "ap",
+    "pincode": "518422",
+    "document": "documents/A_Study_on_a_JWT-Based_User_Authentication_updated_HXnQ0L6.pdf",
+    "receipt": "receipts/receipt_7.pdf",
+    "patta": "",
+    "ipfs_hash": "QmcYJ3XCHi9ekpg9tQBUmTpSA7gsrX1MK1BLruVK95N4M2",
+    "receipt_number": "619ACC6F94",
+    "status": "clerk_review",
+    "currently_with": 3,
+    "created_at": "2025-11-01T17:57:21.060Z",
+    "comp_no": "LR-None",
+    "file_no": "1",
+    "subject": "Land Record Management",
+    "sent_to": null,
+    "due_on": "2025-12-01"
+  }
+},
+{
+  "model": "myapp.landrequest",
+  "pk": 8,
+  "fields": {
+    "txn_id": "TXN-B39977B89A3D",
+    "nature": "electronic",
+    "created_by": 17,
+    "full_name": "rajesh",
+    "email": "rajeshbyreddy95@gmail.com",
+    "phone_number": "234567890",
+    "aadhar_number": "1234567890",
+    "dob": "2003-03-16",
+    "owner_name": "rajesh",
+    "survey_number": "1",
+    "area": "1",
+    "address": "warangal",
+    "state": "tg",
+    "city": "tg",
+    "pincode": "518422",
+    "document": "documents/Seminar_PPT.pdf",
+    "receipt": "receipts/receipt_8.pdf",
+    "patta": "",
+    "ipfs_hash": "QmUfVWhrPLAKr86hYQGGrR31H4dNX3M6HnSmUE6FZfvkBR",
+    "receipt_number": "DE7C4DF75D",
+    "status": "clerk_review",
+    "currently_with": 3,
+    "created_at": "2025-11-01T18:12:27.433Z",
+    "comp_no": "LR-None",
+    "file_no": "1",
+    "subject": "Land Record Management",
+    "sent_to": null,
+    "due_on": "2025-12-01"
+  }
+},
+{
+  "model": "myapp.landrequest",
+  "pk": 9,
+  "fields": {
+    "txn_id": "TXN-F52C70F2F1FD",
+    "nature": "electronic",
+    "created_by": 17,
+    "full_name": "rajes",
+    "email": "rajesh@gmail.com",
+    "phone_number": "23456789",
+    "aadhar_number": "23456789",
+    "dob": "2003-03-16",
+    "owner_name": "rajesh",
+    "survey_number": "11",
+    "area": "1",
+    "address": "tg",
+    "state": "tg",
+    "city": "tg",
+    "pincode": "518422",
+    "document": "documents/IoT_Assignment.pdf",
+    "receipt": "",
+    "patta": "",
+    "ipfs_hash": "06e75dfef4350d73dc3a73e9dc7232b5bdd1f92329171a",
+    "receipt_number": "9B9BCA07D6",
+    "status": "clerk_review",
+    "currently_with": 3,
+    "created_at": "2025-11-01T18:20:52.775Z",
+    "comp_no": "LR-None",
+    "file_no": "11",
+    "subject": "Land Record Management",
+    "sent_to": null,
+    "due_on": "2025-12-01"
+  }
+},
+{
+  "model": "myapp.landrequest",
+  "pk": 10,
+  "fields": {
+    "txn_id": "TXN-549584214B60",
+    "nature": "electronic",
+    "created_by": 17,
+    "full_name": "rajes",
+    "email": "rajesh@gmail.com",
+    "phone_number": "23456789",
+    "aadhar_number": "23456789",
+    "dob": "2003-03-16",
+    "owner_name": "rajesh",
+    "survey_number": "11",
+    "area": "1",
+    "address": "tg",
+    "state": "tg",
+    "city": "tg",
+    "pincode": "518422",
+    "document": "documents/IoT_Assignment_D1T0NBI.pdf",
+    "receipt": "receipts/receipt_10.pdf",
+    "patta": "",
+    "ipfs_hash": "QmbrMu3AxapXz6HYD8ZmzvFzmMKABd61BKXC9FvzB7H8yP",
+    "receipt_number": "E7D82307DE",
+    "status": "clerk_review",
+    "currently_with": 3,
+    "created_at": "2025-11-01T18:22:31.245Z",
+    "comp_no": "LR-None",
+    "file_no": "11",
+    "subject": "Land Record Management",
+    "sent_to": null,
+    "due_on": "2025-12-01"
+  }
+},
+{
+  "model": "myapp.landrequest",
+  "pk": 11,
+  "fields": {
+    "txn_id": "TXN-7332D1E8511B",
+    "nature": "electronic",
+    "created_by": 17,
+    "full_name": "rajesh",
+    "email": "rajesh@gmail.com",
+    "phone_number": "2345678",
+    "aadhar_number": "23456789",
+    "dob": "2002-12-10",
+    "owner_name": "rajesh",
+    "survey_number": "1",
+    "area": "1",
+    "address": "tg",
+    "state": "tg",
+    "city": "tg",
+    "pincode": "518422",
+    "document": "documents/yogesh_resume_1.pdf",
+    "receipt": "receipts/receipt_11.pdf",
+    "patta": "",
+    "ipfs_hash": "QmXzxPW8kKex3hRjG4dgT3R8gTb6WzSt23e5jQJxarAHkM",
+    "receipt_number": "A967D87F0E",
+    "status": "clerk_review",
+    "currently_with": 3,
+    "created_at": "2025-11-01T18:26:43.218Z",
+    "comp_no": "LR-None",
+    "file_no": "1",
+    "subject": "Land Record Management",
+    "sent_to": null,
+    "due_on": "2025-12-01"
+  }
+},
+{
+  "model": "myapp.landrequest",
+  "pk": 12,
+  "fields": {
+    "txn_id": "TXN-639FBD1892D6",
+    "nature": "electronic",
+    "created_by": 17,
+    "full_name": "Byreddy Rajesh",
+    "email": "rajesh@gmail.com",
+    "phone_number": "7075979652",
+    "aadhar_number": "453809358739",
+    "dob": "2003-03-16",
+    "owner_name": "rajesh",
+    "survey_number": "1",
+    "area": "1",
+    "address": "tg",
+    "state": "tg",
+    "city": "tg",
+    "pincode": "518422",
+    "document": "documents/A_Study_on_a_JWT-Based_User_Authentication_updated_7TRZiwv.pdf",
+    "receipt": "receipts/receipt_12.pdf",
+    "patta": "",
+    "ipfs_hash": "QmPQCvanX4GffabjFwzNUjPEdEGBTo5KK8X6v2BPoPX3p9",
+    "receipt_number": "05572927A1",
+    "status": "clerk_review",
+    "currently_with": 3,
+    "created_at": "2025-11-01T18:29:20.060Z",
+    "comp_no": "LR-None",
+    "file_no": "1",
+    "subject": "Land Record Management",
+    "sent_to": null,
+    "due_on": "2025-12-01"
+  }
+},
+{
+  "model": "myapp.landrequest",
+  "pk": 13,
+  "fields": {
+    "txn_id": "TXN-A41E9DCA7BD2",
+    "nature": "electronic",
+    "created_by": 17,
+    "full_name": "rajesh",
+    "email": "rajesh@gmail.com",
+    "phone_number": "3456789",
+    "aadhar_number": "3456789",
+    "dob": "2003-02-10",
+    "owner_name": "rajesh",
+    "survey_number": "1",
+    "area": "1",
+    "address": "tg",
+    "state": "tg",
+    "city": "tg",
+    "pincode": "518422",
+    "document": "documents/A_Study_on_a_JWT-Based_User_Authentication_updated_LcqYTLg.pdf",
+    "receipt": "receipts/receipt_13.pdf",
+    "patta": "",
+    "ipfs_hash": "QmcSRN96r1iFJqnBafp3JyWMrgvFpcbKUrszGr1x1dby4M",
+    "receipt_number": "02D4B511B5",
+    "status": "superintendent_review",
+    "currently_with": 6,
+    "created_at": "2025-11-01T18:35:36.377Z",
+    "comp_no": "LR-None",
+    "file_no": "1",
+    "subject": "Land Record Management",
+    "sent_to": null,
+    "due_on": "2025-12-01"
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 1,
+  "fields": {
+    "land_request": 1,
+    "timestamp": "2025-10-26T19:41:43.234Z",
+    "from_user": 1,
+    "to_user": 3,
+    "action": "submitted",
+    "remarks": "Request submitted and forwarded to Clerk."
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 2,
+  "fields": {
+    "land_request": 2,
+    "timestamp": "2025-11-01T11:21:24.610Z",
+    "from_user": 1,
+    "to_user": 3,
+    "action": "submitted",
+    "remarks": "Request submitted and forwarded to Clerk."
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 3,
+  "fields": {
+    "land_request": 1,
+    "timestamp": "2025-11-01T12:40:57.323Z",
+    "from_user": 3,
+    "to_user": 6,
+    "action": "forwarded",
+    "remarks": "accepted"
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 4,
+  "fields": {
+    "land_request": 1,
+    "timestamp": "2025-11-01T12:44:46.556Z",
+    "from_user": 6,
+    "to_user": 7,
+    "action": "forwarded",
+    "remarks": "verified by superident"
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 5,
+  "fields": {
+    "land_request": 2,
+    "timestamp": "2025-11-01T13:20:33.880Z",
+    "from_user": 3,
+    "to_user": 6,
+    "action": "forwarded",
+    "remarks": "accepted"
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 6,
+  "fields": {
+    "land_request": 3,
+    "timestamp": "2025-11-01T13:50:30.689Z",
+    "from_user": 8,
+    "to_user": 3,
+    "action": "submitted",
+    "remarks": "Request submitted and forwarded to Clerk."
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 7,
+  "fields": {
+    "land_request": 4,
+    "timestamp": "2025-11-01T13:56:46.416Z",
+    "from_user": 1,
+    "to_user": 3,
+    "action": "submitted",
+    "remarks": "Request submitted and forwarded to Clerk."
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 8,
+  "fields": {
+    "land_request": 1,
+    "timestamp": "2025-11-01T14:25:07.968Z",
+    "from_user": 7,
+    "to_user": 10,
+    "action": "forwarded",
+    "remarks": "accepted from project officer"
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 9,
+  "fields": {
+    "land_request": 1,
+    "timestamp": "2025-11-01T14:27:30.665Z",
+    "from_user": 10,
+    "to_user": 9,
+    "action": "forwarded",
+    "remarks": "accepted from mro"
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 10,
+  "fields": {
+    "land_request": 1,
+    "timestamp": "2025-11-01T14:30:45.356Z",
+    "from_user": 9,
+    "to_user": 11,
+    "action": "forwarded",
+    "remarks": "accepted by Sur"
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 11,
+  "fields": {
+    "land_request": 1,
+    "timestamp": "2025-11-01T14:33:17.641Z",
+    "from_user": 11,
+    "to_user": 12,
+    "action": "forwarded",
+    "remarks": "accepted by revenue"
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 12,
+  "fields": {
+    "land_request": 1,
+    "timestamp": "2025-11-01T14:38:09.436Z",
+    "from_user": 12,
+    "to_user": 13,
+    "action": "forwarded",
+    "remarks": "accepted by bro"
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 13,
+  "fields": {
+    "land_request": 1,
+    "timestamp": "2025-11-01T14:43:06.333Z",
+    "from_user": 13,
+    "to_user": 14,
+    "action": "forwarded",
+    "remarks": "accepted by revenue_dept officer"
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 14,
+  "fields": {
+    "land_request": 1,
+    "timestamp": "2025-11-01T14:43:30.018Z",
+    "from_user": 14,
+    "to_user": 15,
+    "action": "forwarded",
+    "remarks": "accepted by jc"
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 15,
+  "fields": {
+    "land_request": 1,
+    "timestamp": "2025-11-01T14:43:57.296Z",
+    "from_user": 15,
+    "to_user": 16,
+    "action": "forwarded",
+    "remarks": "accepted by col"
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 16,
+  "fields": {
+    "land_request": 1,
+    "timestamp": "2025-11-01T14:44:28.188Z",
+    "from_user": 16,
+    "to_user": null,
+    "action": "approved",
+    "remarks": "accepted by mw"
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 17,
+  "fields": {
+    "land_request": 3,
+    "timestamp": "2025-11-01T14:53:15.689Z",
+    "from_user": 3,
+    "to_user": 6,
+    "action": "forwarded",
+    "remarks": ""
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 18,
+  "fields": {
+    "land_request": 3,
+    "timestamp": "2025-11-01T14:54:02.220Z",
+    "from_user": 6,
+    "to_user": 7,
+    "action": "forwarded",
+    "remarks": ""
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 19,
+  "fields": {
+    "land_request": 5,
+    "timestamp": "2025-11-01T17:34:16.417Z",
+    "from_user": 1,
+    "to_user": 3,
+    "action": "submitted",
+    "remarks": "Request submitted and forwarded to Clerk."
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 20,
+  "fields": {
+    "land_request": 6,
+    "timestamp": "2025-11-01T17:35:47.291Z",
+    "from_user": 1,
+    "to_user": 3,
+    "action": "submitted",
+    "remarks": "Request submitted and forwarded to Clerk."
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 21,
+  "fields": {
+    "land_request": 7,
+    "timestamp": "2025-11-01T17:57:28.691Z",
+    "from_user": 1,
+    "to_user": 3,
+    "action": "submitted",
+    "remarks": "Request submitted and forwarded to Clerk."
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 22,
+  "fields": {
+    "land_request": 8,
+    "timestamp": "2025-11-01T18:12:34.719Z",
+    "from_user": 17,
+    "to_user": 3,
+    "action": "submitted",
+    "remarks": "Request submitted and forwarded to Clerk."
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 23,
+  "fields": {
+    "land_request": 10,
+    "timestamp": "2025-11-01T18:22:38.902Z",
+    "from_user": 17,
+    "to_user": 3,
+    "action": "submitted",
+    "remarks": "Request submitted and forwarded to Clerk."
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 24,
+  "fields": {
+    "land_request": 11,
+    "timestamp": "2025-11-01T18:26:50.418Z",
+    "from_user": 17,
+    "to_user": 3,
+    "action": "submitted",
+    "remarks": "Request submitted and forwarded to Clerk."
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 25,
+  "fields": {
+    "land_request": 12,
+    "timestamp": "2025-11-01T18:29:27.759Z",
+    "from_user": 17,
+    "to_user": 3,
+    "action": "submitted",
+    "remarks": "Request submitted and forwarded to Clerk."
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 26,
+  "fields": {
+    "land_request": 13,
+    "timestamp": "2025-11-01T18:35:43.836Z",
+    "from_user": 17,
+    "to_user": 3,
+    "action": "submitted",
+    "remarks": "Request submitted and forwarded to Clerk."
+  }
+},
+{
+  "model": "myapp.landrequesthistory",
+  "pk": 27,
+  "fields": {
+    "land_request": 13,
+    "timestamp": "2025-11-01T18:37:26.268Z",
+    "from_user": 3,
+    "to_user": 6,
+    "action": "forwarded",
+    "remarks": "accpeted in clerk"
+  }
+}
+]

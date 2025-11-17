@@ -1,0 +1,204 @@
+# SPDX-License-Identifier: Apache-2.0
+
+################################################################################
+#
+#   ORGANIZATIONS
+#
+################################################################################
+Organizations:
+
+  - &Org1
+      Name: ITDAMS
+      ID: ITDAMS
+      MSPDir: /Users/rajeshbyreddy/fabric-land-records/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/msp
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('ITDAMS.Clerk','ITDAMS.Superintendent','ITDAMS.ProjectOfficer')"
+          Writers:
+              Type: Signature
+              Rule: "OR('ITDAMS.Clerk','ITDAMS.ProjectOfficer')"
+          Admins:
+              Type: Signature
+              Rule: "OR('ITDAMS.Superintendent')"
+          Endorsement:
+              Type: Signature
+              Rule: "OR('ITDAMS.Clerk','ITDAMS.ProjectOfficer')"
+      AnchorPeers:
+          - Host: peer0.org1.example.com
+            Port: 7051
+
+  - &Org2
+      Name: RevenueOpsMSP
+      ID: RevenueOpsMSP
+      MSPDir: /Users/rajeshbyreddy/fabric-land-records/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/msp
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('RevenueOpsMSP.VRO','RevenueOpsMSP.Surveyor','RevenueOpsMSP.RevenueInspector','RevenueOpsMSP.MRO')"
+          Writers:
+              Type: Signature
+              Rule: "OR('RevenueOpsMSP.VRO','RevenueOpsMSP.MRO')"
+          Admins:
+              Type: Signature
+              Rule: "OR('RevenueOpsMSP.MRO')"
+          Endorsement:
+              Type: Signature
+              Rule: "OR('RevenueOpsMSP.VRO','RevenueOpsMSP.MRO')"
+      AnchorPeers:
+          - Host: peer0.org2.example.com
+            Port: 8051
+
+  - &Org3
+      Name: AuthorityMSP
+      ID: AuthorityMSP
+      MSPDir: /Users/rajeshbyreddy/fabric-land-records/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/msp
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('AuthorityMSP.JointCollector','AuthorityMSP.DistrictCollector','AuthorityMSP.MinistryOfWelfare')"
+          Writers:
+              Type: Signature
+              Rule: "OR('AuthorityMSP.JointCollector','AuthorityMSP.MinistryOfWelfare')"
+          Admins:
+              Type: Signature
+              Rule: "OR('AuthorityMSP.DistrictCollector')"
+          Endorsement:
+              Type: Signature
+              Rule: "OR('AuthorityMSP.JointCollector','AuthorityMSP.MinistryOfWelfare')"
+      AnchorPeers:
+          - Host: peer0.org3.example.com
+            Port: 9051
+
+  - &OrdererOrg
+      Name: OrdererMSP
+      ID: OrdererMSP
+      MSPDir: ../crypto-config/ordererOrganizations/example.com/msp
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('OrdererMSP.admin')"
+          Writers:
+              Type: Signature
+              Rule: "OR('OrdererMSP.admin')"
+          Admins:
+              Type: Signature
+              Rule: "OR('OrdererMSP.admin')"
+
+################################################################################
+#
+#   CAPABILITIES
+#
+################################################################################
+Capabilities:
+    Channel: &ChannelCapabilities
+        V2_0: true
+    Orderer: &OrdererCapabilities
+        V2_0: true
+    Application: &ApplicationCapabilities
+        V2_5: true
+
+################################################################################
+#
+#   APPLICATION
+#
+################################################################################
+Application: &ApplicationDefaults
+    ACLs: &ACLsDefault {}
+    Organizations: []
+    Policies:
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ApplicationCapabilities
+
+################################################################################
+#
+#   ORDERER
+#
+################################################################################
+Orderer: &OrdererDefaults
+    OrdererType: solo
+    Addresses: []
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 500
+        AbsoluteMaxBytes: 10 MB
+        PreferredMaxBytes: 2 MB
+    Organizations: []
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+    Capabilities:
+        <<: *OrdererCapabilities
+
+################################################################################
+#
+#   CHANNEL
+#
+################################################################################
+Channel: &ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ChannelCapabilities
+
+################################################################################
+#
+#   PROFILES
+#
+################################################################################
+Profiles:
+
+  LandRecordOrdererGenesis:
+      Orderer:
+          <<: *OrdererDefaults
+          Organizations:
+              - *OrdererOrg
+      Consortiums:
+          LandRecordConsortium:
+              Organizations:
+                  - *Org1
+                  - *Org2
+                  - *Org3
+
+  LandRecordChannel:
+      <<: *ChannelDefaults
+      Consortium: LandRecordConsortium
+      Application:
+          <<: *ApplicationDefaults
+          Organizations:
+              - *Org1
+              - *Org2
+              - *Org3

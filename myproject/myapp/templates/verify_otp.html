@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}E-Land Records - OTP Verification{% endblock %}
+
+{% block content %}
+<div class="register-container">
+  <div class="register-box">
+    <h2>{{ otp_title|default:"OTP Verification" }}</h2>
+
+    <div class="col mt-4">
+      {% if messages %}
+        <div class="alert-container">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <p>Please enter the OTP sent to your email address.</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-section full-width">
+        <div class="form-group">
+          <label for="id_otp">Enter OTP <span class="required">*</span></label>
+          <input type="text" name="otp" id="id_otp" class="form-input" placeholder="Enter OTP" maxlength="6" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm mt-3">
+        <i class="fas fa-check"></i> Verify OTP
+      </button>
+    </form>
+
+    <div class="text-center mt-3">
+      <form method="post" style="display: inline;">
+        {% csrf_token %}
+        {% if can_resend %}
+          <button type="submit" name="resend_otp" class="btn btn-primary btn-sm" id="resend-btn">
+            <i class="fas fa-sync-alt"></i> {{ resend_label|default:"Resend OTP" }}
+          </button>
+        {% else %}
+          <button type="button" class="btn btn-secondary btn-sm" id="resend-btn" disabled>
+            Resend OTP in <span id="timer">60</span>s
+          </button>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  {% if not can_resend %}
+    let timeLeft = 60;
+    const timerSpan = document.getElementById('timer');
+    const resendBtn = document.getElementById('resend-btn');
+
+    const countdown = setInterval(() => {
+      timeLeft--;
+      timerSpan.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        resendBtn.disabled = false;
+        resendBtn.classList.remove('btn-secondary');
+        resendBtn.classList.add('btn-primary');
+        resendBtn.innerHTML = `<i class="fas fa-sync-alt"></i> Resend OTP`;
+        resendBtn.type = "submit";
+        resendBtn.name = "resend_otp";
+      }
+    }, 1000);
+  {% endif %}
+</script>
+{% endblock %}

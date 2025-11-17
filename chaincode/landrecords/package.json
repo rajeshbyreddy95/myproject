@@ -1,0 +1,14 @@
+{
+    "name": "landrecord",
+    "version": "1.0.0",
+    "description": "Simple Land Record Chaincode",
+    "main": "index.js",
+    "scripts": {
+      "start": "fabric-chaincode-node start"
+    },
+    "dependencies": {
+      "fabric-contract-api": "^2.5.0",
+      "fabric-shim": "^2.5.0"
+    }
+  }
+  

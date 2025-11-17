@@ -1,0 +1,43 @@
+# -----------------------
+# Python
+# -----------------------
+*.pyc
+__pycache__/
+myenv/
+env/
+venv/
+
+# -----------------------
+# Django
+# -----------------------
+db.sqlite3
+.env
+*.log
+media/
+
+# -----------------------
+# Node.js
+# -----------------------
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+
+# -----------------------
+# Hyperledger Fabric
+# -----------------------
+wallet/
+crypto-config/
+*.block
+*.tx
+*.tar.gz
+
+# If you're working inside fabric-samples/ or test-network/
+
+
+# -----------------------
+# VSCode / IDE
+# -----------------------
+.vscode/
+.idea/

@@ -1,0 +1,338 @@
+<!-- base.html -->
+{% load static %}
+{% load nav_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>{% block title %}E-Land Records{% endblock %}</title>
+  
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style2.css' %}">
+  
+  <!-- Font Awesome Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+   <style>
+
+    
+    /* Overall page background */
+    body {
+      background-color: #fafaf8ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header bar */
+    .dashboard-header {
+      background-color: #007bff;
+      color: white;
+      padding: 1px;
+    }
+
+    /* Top navigation bar (below header) */
+    .nav-bar {
+      background-color: #333;
+    }
+    /* Make bold text (DASHBOARD, RECEIPT, ISSUE) appear with a black background */
+    .nav-bar .fw-bold {
+      background-color: black;
+      color: #fff;
+      padding: 8px 15px;
+      margin-right: 5px;
+      border-radius: 4px;
+    }
+    /* Nav bar links (if you use them) */
+    .nav-bar a {
+      color: #fff;
+      padding: 8px 15px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .nav-bar a:hover {
+      background-color: #007bff;
+    }
+
+    /* White “section” boxes with shadow */
+    .section {
+      background: white;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Sidebar (now positioned under header and navbar) */
+    .sidebar {
+      background: #0056b3;
+      min-height: 100vh; /* Make it fill the entire page height */
+    }
+    .sidebar a {
+      display: block;
+      text-align: center;
+      padding: 15px;
+      color: white;
+    }
+    .sidebar a:hover {
+      background: #004494;
+    }
+
+    /* Main content area */
+    .content {
+      padding: 20px;
+    }
+
+    <!-- Custom CSS for active state -->
+      .nav-bar a.nav-link {
+        transition: background-color 0.3s;
+      }
+      .nav-bar a.nav-link.active {
+        background-color: #007bff; /* Highlight color */
+        border-radius: 4px;
+      }
+
+      .user-profile {
+        cursor: pointer;
+        position: relative;
+      }
+      
+      .user-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        min-width: 150px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 999;
+      }
+      
+      .user-dropdown a {
+        display: block;
+        padding: 10px 15px;
+        color: #333;
+        text-decoration: none;
+        font-size: 14px;
+      }
+      
+      .user-dropdown a:hover {
+        background-color: #f0f0f0;
+      }
+      
+      .user-profile:hover .user-dropdown {
+        display: block;
+      }
+      .sidebar-submenu {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        background: #004494;
+        min-width: 160px;
+        z-index: 999;
+        border-radius: 4px;
+        padding: 5px 0;
+      }
+      
+      .sidebar-submenu a {
+        display: block;
+        padding: 10px 15px;
+        color: white;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      
+      .sidebar-submenu a:hover {
+        background-color: #0066cc;
+      }
+      
+      .sidebar-item:hover .sidebar-submenu {
+        display: block;
+      }
+      .user-profile {
+        cursor: pointer;
+      }
+      
+      .user-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        min-width: 150px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 999;
+      }
+      
+      .user-dropdown a {
+        display: block;
+        padding: 10px 15px;
+        color: #333;
+        text-decoration: none;
+        font-size: 14px;
+      }
+      
+      .user-dropdown a:hover {
+        background-color: #f0f0f0;
+      }
+      
+      .user-profile:hover .user-dropdown {
+        display: block;
+      }
+      
+      
+
+
+    {% block css %}
+    {% endblock %}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-container">
+      <img src="{% static "img/earth.png" %}" alt="Logo" />
+      <span class="title">E - Land Records</span>
+    </div>
+    <div class="user-controls">
+      <i class="fas fa-bell notification-icon"></i>
+      <span class="language-btn">en+</span>
+      <i class="fas fa-question-circle help-icon"></i>
+      <div class="user-profile position-relative">
+        <i class="fas fa-user"></i>
+        <span>{{ request.user.username }}</span>
+        <i class="fas fa-caret-down"></i>
+      
+        <!-- Dropdown on hover -->
+        <div class="user-dropdown">
+          <a href="{% url 'official_dashboard' %}"><i class="fas fa-user-circle"></i> Profile</a>
+          <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <nav class="nav-bar d-flex flex-nowrap align-items-center px-3" style="background-color: #333; overflow-x: hidden; white-space: nowrap; font-size: 0.8rem;">
+    <!-- Dashboard Group -->
+    <div class="me-2 d-flex align-items-center">
+      <span class="fw-bold me-1" style="background-color: black; padding: 4px 8px; border-radius: 4px;">DASHBOARD</span>
+      <a href="{% url "official_dashboard" %}" class="me-2 text-white nav-link {% nav_active 'official_dashboard' %}" style="padding: 4px 8px;">View</a>
+    </div>
+    <!-- Receipt Group -->
+    <div class="me-2 d-flex align-items-center">
+      <span class="fw-bold me-1" style="background-color: black; padding: 4px 8px; border-radius: 4px;">RECEIPT</span>
+      <a href="#" class="me-1 text-white nav-link" style="padding: 4px 8px;">Create</a>
+      <a href="{% url "official_receipt_inbox" %}" class="me-1 text-white nav-link {% nav_active 'official_receipt_inbox' %}" style="padding: 4px 8px;">Inbox</a>
+      <a href="#" class="me-1 text-white nav-link" style="padding: 4px 8px;">Sent</a>
+      <a href="#" class="me-1 text-white nav-link" style="padding: 4px 8px;">Advance Search</a>
+    </div>
+    <!-- File Group -->
+    <div class="me-2 d-flex align-items-center">
+      <span class="fw-bold me-1" style="background-color: black; padding: 4px 8px; border-radius: 4px;">FILE</span>
+      <a href="{% url 'file_create' %}" class="me-2 text-white nav-link {% nav_active 'file_create' %}" style="padding: 4px 8px;">Create</a>
+      <a href="#" class="me-2 text-white nav-link" style="padding: 4px 8px;">Inbox</a>
+      <a href="{% url 'official_receipt_sent' %}" class="me-2 text-white nav-link {% nav_active 'official_receipt_sent' %}" style="padding: 4px 8px;">Sent</a>
+      <a href="#" class="me-1 text-white nav-link" style="padding: 4px 8px;">Advance Search</a>
+    </div>
+    <!-- Issue Group -->
+    <div class="d-flex align-items-center">
+      <span class="fw-bold me-1" style="background-color: black; padding: 4px 8px; border-radius: 4px;">ISSUE</span>
+      <a href="#" class="me-1 text-white nav-link" style="padding: 4px 8px;">Sent</a>
+      <a href="#" class="me-1 text-white nav-link" style="padding: 4px 8px;">Returned</a>
+      <a href="#" class="me-1 text-white nav-link" style="padding: 4px 8px;">Advance Search</a>
+    </div>
+  </nav>
+
+  <!-- Container for Sidebar + Main Content -->
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-auto p-0 bg-dark sidebar d-flex flex-column align-items-center min-vh-100">
+        <div class="sidebar-item position-relative group">
+          <a href="#" class="py-3 px-3 d-block text-white"><i class="fa fa-file"></i></a>
+          <div class="sidebar-submenu">
+            <a href="#">Create</a>
+            <a href="{% url "official_receipt_inbox" %}">Inbox</a>
+            <a href="#">Sent</a>
+            <a href="#">Search</a>
+          </div>
+        </div>
+  
+        <div class="sidebar-item position-relative group">
+          <a href="#" class="py-3 px-3 d-block text-white"><i class="fa fa-folder"></i></a>
+          <div class="sidebar-submenu">
+            <a href="{% url 'file_create' %}">Create</a>
+            <a href="#">Inbox</a>
+            <a href="{% url 'official_receipt_sent' %}">Sent</a>
+            <a href="#">Search</a>
+          </div>
+        </div>
+
+        <div class="sidebar-item position-relative group">
+          <a href="#" class="py-3 px-3 d-block text-white"><i class="fa fa-th"></i></a>
+          <div class="sidebar-submenu">
+            <a href="#">Issue Sent</a>
+            <a href="#">Returned</a>
+            <a href="#">Search</a>
+          </div>
+        </div>
+  
+        <!-- Other sidebar icons -->
+        {% comment %} <a href="#" class="py-3 px-3 d-block text-white"><i class="fa fa-th"></i></a> {% endcomment %}
+        <a href="#" class="py-3 px-3 d-block text-white"><i class="fa fa-envelope"></i></a>
+        <a href="#" class="py-3 px-3 d-block text-white"><i class="fa fa-comment"></i></a>
+        <a href="#" class="py-3 px-3 d-block text-white"><i class="fa fa-bell"></i></a>
+        <a href="#" class="py-3 px-3 d-block text-white"><i class="fa fa-cog"></i></a>
+        <a href="{% url 'logout' %}" class="py-3 px-3 d-block text-white"><i class="fa fa-sign-out"></i></a>
+      </div>
+  
+      <!-- Page Content Area -->
+      <div class="col ps-4 pe-5 py-4">
+        {% include "message.html" %}
+        {% block content %}
+        <!-- Child templates inject content here -->
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const navLinks = document.querySelectorAll('.nav-bar a.nav-link');
+  
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+          // Prevent default if you want to avoid page navigation (for AJAX use)
+          // event.preventDefault();
+  
+          // Remove the active class from all links
+          navLinks.forEach(l => l.classList.remove('active'));
+  
+          // Add the active class to the clicked link
+          this.classList.add('active');
+        });
+      });
+    });
+  </script>
+  
+</body>
+</html>

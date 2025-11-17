@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Land Patta Certificate</title>
+
+<style>
+    @page { size: A4; margin: 20mm; }
+    html, body { margin: 0; padding: 0; }
+   
+    body {
+        font-family: 'Times New Roman', Times, serif;
+        background-color: #f0f0f0;
+    }
+
+    .certificate-container {
+        position: relative;
+        width: 170mm;
+        margin: 20px auto;
+        border: 8px double #4a7c59;
+        padding: 20px;
+        background-color: #fcfcf0;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        overflow: hidden;
+    }
+
+    .watermark {
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 500px;
+        opacity: 0.08;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .header { text-align: center; z-index: 1; position: relative; }
+    .header-emblem { width: 80px; }
+
+    .header h1 { margin: 2px 0; font-size: 22px; font-weight: bold; }
+    .header h2 { margin: 2px 0; font-size: 18px; font-weight: bold; }
+    .header h3 {
+        margin-top: 5px;
+        font-size: 24px;
+        font-weight: bold;
+        border-bottom: 2px solid #4a7c59;
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+
+    .issued-date { text-align: right; font-size: 16px; font-weight: bold; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    table, th, td { border: 1px solid #4a7c59; }
+    th { background: #e8f5e9; width: 35%; }
+    th, td { padding: 6px 10px; font-size: 16px; }
+
+    /* ORIGINAL DIGITAL SIGNATURE STYLE */
+    .signature-section {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .digital-signature-box {
+        flex: 1 1 55%;
+        border: 2px solid #006400;
+        background-color: #f4fcf4;
+        border-radius: 8px;
+        padding: 15px;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .ds-header {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: #006400;
+        margin-bottom: 10px;
+    }
+
+    .ds-header img {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+    }
+
+    .ds-body p { margin: 4px 0; font-size: 15px; color: #333; }
+    .ds-body p strong { color: #000; }
+
+    .barcode-section {
+        width: 140px;
+        height: 140px;
+        text-align: center;
+        min-width: 140px;
+        min-height: 140px;
+    }
+
+    @media print {
+        .certificate-container { margin: 0; box-shadow: none; }
+    }
+</style>
+
+<!-- QR JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+</head>
+<body>
+
+<div class="certificate-container">
+
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Emblem_of_India.svg/500px-Emblem_of_India.svg.png"
+         class="watermark" alt="Watermark">
+
+    <div class="header">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Emblem_of_India.svg/120px-Emblem_of_India.svg.png"
+             class="header-emblem">
+        <h1>GOVERNMENT OF TELANGANA</h1>
+        <h2>REVENUE DEPARTMENT</h2>
+        <h3>LAND PATTA CERTIFICATE</h3>
+    </div>
+
+    <div class="issued-date">
+        Issued Date: <span id="issuedDate">{{ issued_date }}</span>
+    </div>
+
+    <table>
+        <tr><th>Certificate Number</th><td>{{ certificate_number }}</td></tr>
+        <tr><th>Full Name</th><td>{{ full_name }}</td></tr>
+        <tr><th>Father / Husband Name</th><td>{{ father_name }}</td></tr>
+        <tr><th>Aadhaar Number</th><td>{{ aadhaar }}</td></tr>
+        <tr><th>Mobile Number</th><td>{{ mobile }}</td></tr>
+        <tr><th>District</th><td>{{ district }}</td></tr>
+        <tr><th>Mandal</th><td>{{ mandal }}</td></tr>
+        <tr><th>Village</th><td>{{ village }}</td></tr>
+        <tr><th>Survey Number</th><td>{{ survey_number }}</td></tr>
+        <tr><th>Patta Number</th><td>{{ patta_number }}</td></tr>
+        <tr><th>Total Land Area</th><td>{{ land_area }}</td></tr>
+        <tr><th>Land Type</th><td>{{ land_type }}</td></tr>
+    </table>
+
+    <div class="signature-section">
+
+        <!-- RESTORED ORIGINAL DIGITAL SIGNATURE -->
+        <div class="digital-signature-box">
+            <div class="ds-header">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Check_icon.svg/48px-Check_icon.svg.png">
+                <span>Digitally Signed</span>
+            </div>
+
+            <div class="ds-body">
+                <p><strong>Name:</strong> K. Chandrasekhar</p>
+                <p><strong>Designation:</strong> Tahsildar, Serilingampally</p>
+                <p><strong>Date:</strong> {{ issued_date }}</p>
+
+            </div>
+        </div>
+
+        <!-- QR CODE -->
+        <div class="barcode-section" id="qrcode"></div>
+    </div>
+
+</div>
+
+<!-- PRINT-SAFE QR CODE (PNG Conversion) -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const qrData = {
+        certificate_number: "{{ certificate_number }}",
+        full_name: "{{ full_name }}",
+        father_name: "{{ father_name }}",
+        aadhaar: "{{ aadhaar }}",
+        mobile: "{{ mobile }}",
+        district: "{{ district }}",
+        mandal: "{{ mandal }}",
+        village: "{{ village }}",
+        survey_number: "{{ survey_number }}",
+        patta_number: "{{ patta_number }}",
+        land_area: "{{ land_area }}",
+        land_type: "{{ land_type }}",
+        issued_date: "{{ issued_date }}"
+    };
+
+    // Hidden QR generator
+    var hidden = document.createElement("div");
+    hidden.style.display = "none";
+    document.body.appendChild(hidden);
+
+    new QRCode(hidden, {
+        text: JSON.stringify(qrData, null, 2),
+        width: 140,
+        height: 140,
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // Canvas → PNG
+    setTimeout(() => {
+        const canvas = hidden.querySelector("canvas");
+        const img = document.createElement("img");
+
+        img.src = canvas.toDataURL("image/png");
+        img.style.width = "140px";
+        img.style.height = "140px";
+
+        document.getElementById("qrcode").appendChild(img);
+        document.body.removeChild(hidden);
+    }, 300);
+
+});
+</script>
+
+</body>
+</html>

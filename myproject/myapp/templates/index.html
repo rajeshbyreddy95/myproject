@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}E-Land Records{% endblock %}
+{% block extra_head %}
+<link
+href="{% static "css/style.css" %}"
+rel="stylesheet"
+/>
+{% endblock  %}
+{% block content %}
+{% include "message.html" %}
+<section class="login-container">
+  <div class="login-container">
+
+    <!-- User Login Box -->
+    <div class="login-box">
+      <h2>User Login</h2>
+      <form id="userLoginForm" method="post" action="{% url 'userlogin' %}">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <div class="spacer"></div>
+        <button type="submit" class="button">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+        <p>New User? <a href="{% url 'registration' %}">Register</a></p>
+        <p class="forgot-password">
+          <a href="{% url 'forgotPassword' %}">Forgot Password?</a>
+        </p>
+      </form>
+    </div>
+
+    <!-- Official Login Box -->
+    <div class="login-box">
+      <h2>Official Login</h2>
+      <form id="officialLoginForm" method="post" action="{% url 'officiallogin' %}">
+        {% csrf_token %}
+        <input type="text" placeholder="Official ID" name="officialId" required />
+        <select name="role" required>
+          <option value="">Select Role</option>
+          {% for key, value in role_choices %}
+              <option value="{{ key }}">{{ value }}</option>
+          {% endfor %}
+      </select>
+        <input type="password" placeholder="Password" name="password" required />
+        <button type="submit" class="button">
+          <i class="fas fa-user-shield"></i> Login
+        </button>
+        <p>New Official? <a href="{% url 'officialregistraion' %}">Register</a></p>
+        <p class="forgot-password">
+          <a href="{% url 'forgotPassword' %}">Forgot Password?</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+  <script>
+    // Add any page-specific JavaScript here if needed.
+  </script>
+{% endblock %}

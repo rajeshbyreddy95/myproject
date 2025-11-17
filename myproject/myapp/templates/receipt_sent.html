@@ -1,0 +1,98 @@
+{% extends "base_eLand.html" %}
+
+{% block content %}
+<!-- Sent Page -->
+<div id="sentPage" class="sent-page">
+  <div class="sent-toolbar">
+    <button class="action-button" id="createPartButton">
+      Create Part
+    </button>
+    <button class="action-button" id="pullBackButton">
+      Pull Back
+    </button>
+  </div>
+  
+  <div class="sent-actions">
+    <div style="display: flex; align-items: center;">
+      <input type="checkbox" class="sent-checkbox">
+      <div style="margin-left: 10px;">
+        <label for="searchInput" style="margin-right: 10px;">Search Here...</label>
+        <select class="dropdown-select">
+          <option>Show Shared Sent</option>
+        </select>
+        <select class="dropdown-select" style="margin-left: 5px;">
+          <option>Choose One</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  
+  <div class="sent-container">
+    <table class="sent-table">
+      <thead>
+        <tr>
+          <th width="30px"><input type="checkbox" class="sent-checkbox"></th>
+          <th width="120px">Comp. No. ↓↑</th>
+          <th width="120px">File No.</th>
+          <th>Subject</th>
+          <th width="150px">Status</th>
+          <th width="120px">Sent On ↓↑</th>
+          <th width="150px">Currently With</th>
+          <th width="120px">Due On ↓↑</th>
+          <th width="100px">Receipt</th>
+          <th width="120px">Document</th> <!-- ✅ New Column -->
+        </tr>
+      </thead>
+      <tbody id="sentTableBody">
+        {% for receipt in receipts %}
+        <tr data-receipt-id="{{ receipt.id }}">
+          <td><input type="checkbox" class="sent-checkbox"></td>
+          <td>{{ receipt.receipt_number }}</td>
+          <td>{{ receipt.file_no }}</td>
+          <td>{{ receipt.subject }}</td>
+          <td>{{ receipt.get_status_display }}</td>
+          <td>{{ receipt.created_at|date:"Y-m-d" }}</td>
+          <td>{{ receipt.currently_with.designation }}</td>
+          <td>{{ receipt.due_on|date:"Y-m-d" }}</td>
+          <td>
+            {% if receipt.receipt %}
+            <a href="{{ receipt.receipt.url }}" target="_blank" class="btn btn-info btn-sm">
+              View
+            </a>
+          {% else %}
+            <span>No Receipt Available</span>
+          {% endif %}
+          </td>
+          <td>
+            {% if receipt.document %}
+              <a href="{{ receipt.document.url }}" target="_blank" class="btn btn-secondary btn-sm">Open</a>
+            {% else %}
+              <span>No Document</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="9" style="text-align: center; padding: 20px;">No Record(s) Found</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="sent-footer">
+    <div class="records-count">Total Records: {{ receipts|length }}</div>
+    <div class="pagination">
+      <button class="page-button">«</button>
+      <button class="page-button active">1</button>
+      <button class="page-button">»</button>
+      <span style="margin-left: 10px;">Page</span>
+      <select class="dropdown-select" style="margin-left: 5px;">
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+      </select>
+    </div>
+  </div>
+</div>
+{% endblock %}

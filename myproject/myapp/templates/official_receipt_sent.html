@@ -1,0 +1,277 @@
+{% extends "base_official_dashboard.html" %}
+{% load static %}
+
+{% block css %}
+
+/* Global Theme */
+body {
+    font-family: "Poppins", sans-serif;
+    background: radial-gradient(circle at top, #0d47a1, #001735 70%);
+    margin: 0;
+    padding: 0;
+    color: #e3e7ec;
+}
+
+/* Main SENT container */
+.sent-page {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 40px;
+    height: 700px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    animation: fadeIn 0.7s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity:0; transform: translateY(20px); }
+    to { opacity:1; transform: translateY(0); }
+}
+
+/* Toolbar */
+.sent-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    margin-bottom: 25px;
+}
+
+/* Action buttons */
+.action-button {
+    background: linear-gradient(135deg, #4dd0e1, #0288d1);
+    border: none;
+    padding: 10px 22px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(77,208,225,0.35);
+    transition: 0.25s;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(77,208,225,0.7);
+}
+
+/* Filter Box */
+.sent-actions {
+    background: rgba(255,255,255,0.05);
+    padding: 18px 25px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.15);
+    margin-bottom: 25px;
+}
+
+.dropdown-select {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 8px 12px;
+    color: white;
+    border-radius: 8px;
+    min-width: 150px;
+}
+
+/* Table */
+.sent-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.05);
+}
+
+.sent-table th {
+   
+    padding: 14px;
+    color: #f5c84c;
+    font-size: 0.95rem;
+    text-shadow: 0 0 4px rgba(245,200,76,0.3);
+    font-weight: 600;
+}
+
+.sent-table td {
+    padding: 14px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    color: #e8e9ed;
+}
+
+.sent-table tr:hover {
+    background: rgba(77,208,225,0.10);
+}
+
+/* Receipt / Document Buttons */
+.btn-info {
+    background: linear-gradient(135deg, #8bc34a, #4caf50);
+    padding: 6px 14px;
+    border-radius: 6px;
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(76,175,80,0.3);
+}
+
+.btn-info:hover {
+    box-shadow: 0 0 14px rgba(76,175,80,0.6);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #616161, #424242);
+    padding: 6px 14px;
+    border-radius: 6px;
+    color: white;
+    border: none;
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(100,100,100,0.35);
+}
+
+.btn-secondary:hover {
+    box-shadow: 0 0 14px rgba(150,150,150,0.6);
+}
+
+/* Footer */
+.sent-footer {
+    margin-top: 25px;
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    color: #e9ebee;
+    border-top: 1px solid rgba(255,255,255,0.18);
+}
+
+.records-count {
+    color: #4dd0e1;
+    font-weight: 600;
+}
+
+.page-button {
+    padding: 7px 14px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 6px;
+    border: none;
+    color: white;
+}
+
+.page-button.active {
+    background: #4dd0e1;
+    color: #001c40;
+    font-weight: 700;
+}
+
+{% endblock %}
+
+{% block content %}
+
+<div id="sentPage" class="sent-page">
+
+  <!-- Toolbar -->
+  <div class="sent-toolbar">
+    <button class="action-button">Create Part</button>
+    <button class="action-button">Pull Back</button>
+  </div>
+
+  <!-- Filter Row -->
+  <div class="sent-actions">
+    <div style="display:flex; align-items:center; gap:20px;">
+      <input type="checkbox">
+      <label>Search Here:</label>
+
+      <select class="dropdown-select">
+        <option>Show Shared Sent</option>
+      </select>
+
+      <select class="dropdown-select">
+        <option>Choose One</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="sent-container">
+    <table class="sent-table">
+      <thead>
+        <tr>
+          <th><input type="checkbox"></th>
+          <th>Comp. No.</th>
+          <th>File No.</th>
+          <th>Subject</th>
+          <th>Sent To</th>
+          <th>Sent On</th>
+          <th>Currently With</th>
+          <th>Due On</th>
+          <th>Receipt</th>
+          <th>Document</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for receipt in receipts %}
+        <tr>
+          <td><input type="checkbox"></td>
+          <td>{{ receipt.comp_no }}</td>
+          <td>{{ receipt.file_no }}</td>
+          <td>{{ receipt.subject }}</td>
+          <td>{{ receipt.sent_to }}</td>
+          <td>{{ receipt.created_at|date:"Y-m-d" }}</td>
+          <td>{{ receipt.currently_with }}</td>
+          <td>{{ receipt.due_on|date:"Y-m-d" }}</td>
+
+          <!-- Receipt -->
+          <td>
+            {% if receipt.receipt %}
+              <a href="{{ receipt.receipt.url }}" target="_blank" class="btn-info btn-sm">View</a>
+            {% else %}
+              <span>No Receipt</span>
+            {% endif %}
+          </td>
+
+          <!-- Document -->
+          <td>
+            {% if receipt.document %}
+              <a href="{{ receipt.document.url }}" target="_blank" class="btn-secondary btn-sm">Open</a>
+            {% else %}
+              <span>No Document</span>
+            {% endif %}
+          </td>
+
+        </tr>
+
+        {% empty %}
+        <tr>
+          <td colspan="10" style="text-align:center; padding:20px;">No Records Found</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Inline PDF Viewer -->
+    <div id="pdfDisplayArea" style="display:none; margin-top:20px;">
+      <iframe id="pdfIframe" style="width:100%; height:600px; border:none;"></iframe>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="sent-footer">
+    <div class="records-count">Total Records: {{ receipts|length }}</div>
+
+    <div>
+      <button class="page-button">«</button>
+      <button class="page-button active">1</button>
+      <button class="page-button">»</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function openPdfInline(url) {
+    document.getElementById("pdfIframe").src = url;
+    document.getElementById("pdfDisplayArea").style.display = "block";
+}
+</script>
+
+{% endblock %}

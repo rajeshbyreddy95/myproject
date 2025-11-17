@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}E-Land Records - User Registration{% endblock %}
+
+{% block content %}
+<!-- Register Container -->
+<div class="register-container">
+  <div class="register-box">
+    <h2>Create User Registration</h2>
+    <form method="post" id="registrationForm" onsubmit="return validateForm()">
+      {% csrf_token %}
+      <div class="form-grid">
+        <!-- Personal Information Section -->
+        <div class="form-section">
+          <h3><i class="fas fa-user"></i> Personal Information</h3>
+          <div class="form-group">
+            <label for="{{ form.first_name.id_for_label }}">
+              First Name <span class="required">*</span>
+            </label>
+            {{ form.first_name|add_class:"form-input" }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.middle_name.id_for_label }}">Middle Name</label>
+            {{ form.middle_name|add_class:"form-input" }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.last_name.id_for_label }}">
+              Last Name <span class="required">*</span>
+            </label>
+            {{ form.last_name|add_class:"form-input" }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.dob.id_for_label }}">
+              Date of Birth <span class="required">*</span>
+            </label>
+            {{ form.dob|add_class:"form-input" }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.gender.id_for_label }}">
+              Gender <span class="required">*</span>
+            </label>
+            {{ form.gender|add_class:"form-select" }}
+          </div>
+        </div>
+
+        <!-- Contact Information Section -->
+        <div class="form-section">
+          <h3><i class="fas fa-address-card"></i> Contact Information</h3>
+          <div class="form-group">
+            <label for="{{ form.phone.id_for_label }}">
+              Phone Number <span class="required">*</span>
+            </label>
+            {{ form.phone|add_class:"form-input" }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">
+              Email Address <span class="required">*</span>
+            </label>
+            {{ form.email|add_class:"form-input" }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.aadhar.id_for_label }}">
+              Aadhar Number <span class="required">*</span>
+            </label>
+            {{ form.aadhar|add_class:"form-input" }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.address.id_for_label }}">
+              Residential Address <span class="required">*</span>
+            </label>
+            {{ form.address|add_class:"form-textarea" }}
+          </div>
+        </div>
+
+        <!-- Account Security Section -->
+        <div class="form-section full-width">
+          <h3><i class="fas fa-lock"></i> Account Security</h3>
+          <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">
+              Username <span class="required">*</span>
+            </label>
+            {{ form.username|add_class:"form-input" }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.password1.id_for_label }}">
+              Password <span class="required">*</span>
+            </label>
+            {{ form.password1|add_class:"form-input" }}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.password2.id_for_label }}">
+              Confirm Password <span class="required">*</span>
+            </label>
+            {{ form.password2|add_class:"form-input" }}
+          </div>
+        </div>
+
+        <!-- Optional OTP Verification Section -->
+        {# Uncomment if you implement OTP verification #}
+        {% comment %} <div class="form-section full-width">
+          <h3><i class="fas fa-shield-alt"></i> Identity Verification</h3>
+          <div class="form-group">
+            <button type="button" class="send-otp-button">
+              <i class="fas fa-paper-plane"></i> Send OTP
+            </button>
+          </div>
+          <div class="otp-input-group">
+            <div class="otp-boxes">
+              <input type="text" class="otp-box" maxlength="1" />
+              <input type="text" class="otp-box" maxlength="1" />
+              <input type="text" class="otp-box" maxlength="1" />
+              <input type="text" class="otp-box" maxlength="1" />
+              <input type="text" class="otp-box" maxlength="1" />
+              <input type="text" class="otp-box" maxlength="1" />
+            </div>
+            <div class="otp-timer">
+              Time remaining: <span id="timer">02:00</span>
+            </div>
+          </div>
+        </div> {% endcomment %}
+
+        <!-- Terms and Conditions -->
+        <div class="form-section full-width">
+          <div class="checkbox-group">
+            <input type="checkbox" id="terms" required />
+            <label for="terms">
+              I agree to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="register-button">
+        <i class="fas fa-user-plus"></i> Create User Account
+      </button>
+    </form>
+    <p class="login-link">
+      Already have an account? <a href="{% url 'home' %}">Login here</a>
+    </p>
+  </div>
+</div>
+
+<script>
+  // Basic form validation
+  function validateForm() {
+    var password = document.getElementById("id_password1").value;
+    var confirmPassword = document.getElementById("id_password2").value;
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return false;
+    }
+    var aadhar = document.getElementById("id_aadhar").value;
+    if (aadhar.length !== 12 || isNaN(aadhar)) {
+      alert("Please enter a valid 12-digit Aadhar number!");
+      return false;
+    }
+    return true;
+  }
+
+  // Auto-focus next OTP input (if OTP is implemented)
+  document.querySelectorAll(".otp-box").forEach((input, index) => {
+    input.addEventListener("input", function () {
+      if (this.value.length === 1 && index < document.querySelectorAll(".otp-box").length - 1) {
+        document.querySelectorAll(".otp-box")[index + 1].focus();
+      }
+    });
+  });
+</script>
+{% endblock %}

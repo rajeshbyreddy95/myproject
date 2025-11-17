@@ -1,0 +1,39 @@
+{% extends 'base_eLand.html' %}
+
+{% block title %}E-Land Records{% endblock %}
+
+{% block content %}
+<div class="row">
+
+  <!-- Left Column: User & Login Details -->
+  <div class="col-md-3">
+    <div class="section">
+      <h5>User &amp; Login Details</h5>
+      <p><strong>Name:</strong> {{ user.get_full_name|default:user.username }}</p>
+
+      <p><strong>Designation:</strong> User</p>
+      <p><strong>IP Address:</strong> {{ request.META.REMOTE_ADDR|default:"Unavailable" }}</p>
+    </div>
+    <div class="section mt-3">
+      <h5>Current Assigned Roles</h5>
+      <p>User</p>
+    </div>
+  </div>
+  
+  <!-- Middle Column: File Details -->
+  <div class="col-md-6">
+    <div class="section">
+      <h5>File Details</h5>
+      <p>Data Not Available</p>
+    </div>
+  </div>
+  
+  <!-- Right Column: Alerts & Notifications -->
+  <div class="col-md-3">
+    <div class="section">
+      <h5>Alerts &amp; Notifications</h5>
+      <p>No new notifications</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,231 @@
+{% extends "base_official_dashboard.html" %}
+
+{% block css %}
+/* ---------- GLOBAL THEME ---------- */
+body {
+    font-family: "Poppins", sans-serif;
+    background: radial-gradient(circle at top, #0d47a1, #001735 70%);
+    margin: 0;
+    padding: 0;
+    color: #e3e7ec;
+}
+
+/* ---------- CONTAINER ---------- */
+.file-create-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 35px;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+    from { opacity:0; transform:translateY(20px); }
+    to { opacity:1; transform:translateY(0); }
+}
+
+.file-create-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #f5c84c;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(245, 200, 76, 0.7);
+}
+
+/* --------- SECTIONS -------- */
+.form-section {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    box-shadow: inset 0 0 12px rgba(255,255,255,0.07);
+}
+
+.form-section h3 {
+    color: #4dd0e1;
+    margin-bottom: 18px;
+    text-shadow: 0 0 8px rgba(77, 208, 225, 0.6);
+    font-size: 1.2rem;
+}
+
+/* ---------- GRID ----------- */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+}
+
+/* ---------- INPUT FIELD DESIGN ---------- */
+.form-group label {
+    font-weight: 600;
+    color: #e8eaef;
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #ffffff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #4dd0e1;
+    box-shadow: 0 0 10px rgba(77,208,225,0.6);
+}
+
+/* ---------- BUTTONS ---------- */
+.action-buttons button {
+    padding: 14px 30px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    cursor: pointer;
+    margin: 0 12px;
+    transition: 0.3s ease;
+}
+
+.btn-accept {
+    background: linear-gradient(135deg, #2e7d32, #66bb6a);
+    box-shadow: 0 0 10px rgba(102,187,106,0.6);
+}
+
+.btn-reject {
+    background: linear-gradient(135deg, #b71c1c, #e53935);
+    box-shadow: 0 0 10px rgba(229,57,53,0.6);
+}
+
+.action-buttons button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(255,255,255,0.4);
+}
+
+{% endblock %}
+
+{% block content %}
+<div class="file-create-container">
+  <h2>🔐 Land Request Review – Blockchain Secured</h2>
+
+  <form id="fileReviewForm" method="post" action="{% url 'file_create' %}">
+    {% csrf_token %}
+
+    <input type="hidden" name="user_role" value="{{ request.user.designation }}">
+
+    <!-- FILE NO -->
+    <div class="form-group">
+      <label>Select File No:</label>
+      <select name="fileNo" id="fileNo" required>
+        <option value="">-- Choose File --</option>
+        {% for fno in file_numbers %}
+          <option value="{{ fno.pk }}">{{ fno.receipt_number }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- LAND DETAILS -->
+    <div class="form-section">
+      <h3>📍 Land Details</h3>
+
+      <div class="grid-3">
+        <div class="form-group">
+          <label>Survey Number:</label>
+          <input type="text" id="surveyNumber" readonly>
+        </div>
+
+        <div class="form-group">
+          <label>Total Area:</label>
+          <input type="text" id="totalArea" readonly>
+        </div>
+
+        <div class="form-group">
+          <label>Purpose:</label>
+          <select id="purpose" disabled>
+            <option value="">-- Purpose --</option>
+            <option value="Farming">Farming</option>
+            <option value="Construction">Construction</option>
+            <option value="Commercial">Commercial</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADDRESS -->
+    <div class="form-section">
+      <h3>🏛 Land Address</h3>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Address:</label>
+          <textarea id="landAddress" rows="3" readonly></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Remarks:</label>
+          <textarea id="remarks" name="remarks" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <input type="hidden" name="action" id="action">
+
+    <!-- BUTTONS -->
+    <div class="action-buttons text-center mt-4">
+      <button type="button" class="btn-accept" onclick="submitForm('accept')">
+        ✔ Approve & Forward
+      </button>
+
+      <button type="button" class="btn-reject" onclick="submitForm('reject')">
+        ✘ Reject Request
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<script>
+document.getElementById("fileNo").addEventListener("change", function() {
+    const id = this.value;
+    if (!id) return;
+    fetch(`/api/get_file_details/${id}/`)
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById("surveyNumber").value = data.survey_number || "";
+        document.getElementById("totalArea").value = data.area || "";
+        document.getElementById("purpose").value = data.purpose || "";
+        document.getElementById("landAddress").value = data.address || "";
+      });
+});
+
+function submitForm(actionType) {
+    document.getElementById("action").value = actionType;
+    let msg = actionType === "accept"
+      ? "Approve this land request? It will be recorded in the blockchain."
+      : "Reject this land request? The decision will be logged.";
+    if (confirm(msg)) document.getElementById("fileReviewForm").submit();
+}
+</script>
+
+{% endblock %}

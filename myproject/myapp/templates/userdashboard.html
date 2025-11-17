@@ -1,0 +1,665 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block title %}E-Land Records - User Dashboard{% endblock %}
+
+{% block dashboard_content %}
+
+<!-- Main Dashboard Content -->
+
+  <!-- Example: Land Records Section -->
+  {% comment %} <div class="rectangle mb-4" id="mainD"> {% endcomment %}
+
+   
+
+    <!-- Records Table -->
+  <div id="landRecordOption" class="rectangle mb-4 mt-5" style="display: none;">
+      <!-- Main Heading -->
+      <div class="rectangle-title d-flex align-items-center mb-2 custom-heading">
+        <i class="fas fa-landmark me-2"></i>
+        <span>Land Records</span>
+      </div>
+      <!-- Subheading/Description -->
+      <p class="text-muted custom-description">
+        View and manage your land records, certificates, and documentation.
+      </p>
+      <div class="quick-actions d-flex gap-2 flex-wrap mb-3">
+        <button class="btn btn-primary" onclick="showAllRecords()">
+          <i class="fas fa-table me-1"></i> All Records
+        </button>
+        <button class="btn btn-primary" onclick="handleNewApplication()">
+          <i class="fas fa-plus-circle"></i> New Application
+        </button>
+        <button class="btn btn-secondary" onclick="toggleSearch()">
+          <i class="fas fa-search"></i> Survey No.
+        </button>
+        <button class="btn btn-info" onclick="toggleTrackApplication()">
+          <i class="fas fa-search"></i> Track Application
+        </button>
+        <button class="btn btn-warning" onclick="toggleApplicationHistory()">
+          <i class="fas fa-history"></i> Application History
+        </button>
+      </div>
+    </div>
+    
+  {% comment %} </div> {% endcomment %}
+
+
+  <div id="searchFilters" class="mb-3" style="display: none;">
+    <input
+      type="text"
+      id="searchInput"
+      class="form-control"
+      placeholder="Search by Survey No..."
+      onkeyup="filterRecords()"
+    >
+  </div>
+
+
+  <!-- New Application Form -->
+  <div id="recordForm" class="form-container" style="display: none;">
+    <form id="landApplicationForm" action="{% url 'add_land_record' %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="surveyNo" class="form-label">Survey No.</label>
+        <input type="text" id="surveyNo" name="surveyNo" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="ownerName" class="form-label">Owner Name</label>
+        <input type="text" id="ownerName" name="ownerName" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="area" class="form-label">Area (sq.ft)</label>
+        <input type="number" id="area" name="area" class="form-control" step="0.01" required>
+      </div>
+      <div class="mb-3">
+        <label for="state" class="form-label">State</label>
+        <input type="text" id="state" name="state" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="city" class="form-label">City / District</label>
+        <!-- Note: The view uses the same value for district and city -->
+        <input type="text" id="city" name="city" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="pincode" class="form-label">Pincode</label>
+        <input type="text" id="pincode" name="pincode" class="form-control" maxlength="6" required>
+      </div>
+      <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <textarea id="address" name="address" class="form-control" rows="3" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="documents" class="form-label">Documents</label>
+        <input type="file" id="documents" name="documents[]" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-check-circle"></i> Submit Application
+      </button>
+    </form>
+  </div>
+
+
+
+    <!-- (Optional) Track Application Form -->
+  <div id="trackApplicationForm" class="verification-form mb-3" style="display: none;">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Enter Application ID" id="trackApplicationId">
+      <button class="btn btn-outline-secondary" type="button" onclick="trackApplication(); return false;">
+        <i class="fas fa-search"></i> Track
+      </button>
+    </div>
+    <!-- This section will be updated by JavaScript when a valid application is returned -->
+    <div id="trackApplicationResult" class="track-result mt-3" style="display: none;">
+      <h5>Application Status for <span class="app-id"></span></h5>
+      <div class="status-details mt-2">
+        <p><strong>Status:</strong> <span class="status-text"></span></p>
+        <p><strong>Last Updated:</strong> <span class="last-update"></span></p>
+        <p><strong>Estimated Completion:</strong> <span class="completion-date"></span></p>
+      </div>
+    </div>
+  </div>
+
+
+
+    
+    {% if records %}
+      <div class="records-table" style="display:none;" id="allRecords">
+        <table id="recordsTable" class="table table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>Survey No.</th>
+              <th>Owner Name</th>
+              <th>Area (sq.ft)</th>
+              <th>Location</th>
+              <th>Registration Date</th>
+              <th>Status</th>
+              <th>ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in records %}
+            <tr>
+              <td>{{ record.survey_no }}</td>
+              <td>{{ record.owner_name }}</td>
+              <td>{{ record.area }}</td>
+              <td>{{ record.city }}, {{ record.state }}</td>
+              <td>{{ record.registered_date }}</td>
+              <td>{{ record.status }}</td>
+              <td>{{ record.application_id }}</td>
+              <td>
+                <div class="action-icons">
+                  <a href="{{ record.documents.url }}" target="_blank">
+                    <i class="fas fa-eye"></i>
+                  </a>
+                  <i class="fas fa-edit" title="Edit"></i>
+                  {% comment %} <a href="{{ record.documents.url }}" download title="Download PDF">
+                    <i class="fas fa-download"></i>
+                  </a> {% endcomment %}
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="text-center">No records found.</p>
+    {% endif %}
+
+    <!-- Document Viewer Container -->
+    <div id="docViewer" style="display: none; margin-top: 20px;">
+      <!-- Embedded document will appear here -->
+    </div>
+</div>
+      <!-- Other sections go here -->
+    
+    <!-- Pagination -->
+  {% comment %} <div class="pagination d-flex justify-content-center mt-3">
+    <button class="btn btn-outline-secondary"><i class="fas fa-chevron-left"></i></button>
+    <button class="btn btn-outline-secondary active">1</button>
+    <button class="btn btn-outline-secondary">2</button>
+    <button class="btn btn-outline-secondary">3</button>
+    <button class="btn btn-outline-secondary"><i class="fas fa-chevron-right"></i></button>
+  </div> {% endcomment %}
+
+
+
+
+
+
+
+
+  
+  <!-- Additional sections (Ownership Transfer, Verification, Reports, etc.) can be added below in a similar manner. -->
+  <div id="ownnershipTransferOption" class="rectangle mb-4" style="display: none;">
+    <div class="rectangle-title d-flex align-items-center mb-2">
+      <i class="fas fa-exchange-alt me-2"></i>
+      <span>Ownership Transfer</span>
+    </div>
+    <h4 class="rectangle-notes mb-3 mt-4">
+      Initiate and track ownership transfer requests.
+    </h4>
+    
+    <div class="quick-actions d-flex gap-2 flex-wrap mb-3">
+      <button class="btn btn-primary" onclick="handleNewTransfer(); return false;">
+        <i class="fas fa-plus-circle"></i> New Transfer
+      </button>
+      <button class="btn btn-secondary" onclick="toggleTransferSearch(); return false;">
+        <i class="fas fa-search"></i> Search Transfer
+      </button>
+      <button class="btn btn-info" onclick="toggleTransferTracking(); return false;">
+        <i class="fas fa-search"></i> Track Transfer
+      </button>
+      <button class="btn btn-warning" onclick="toggleTransferHistory(); return false;">
+        <i class="fas fa-history"></i> Transfer History
+      </button>
+    </div>
+    
+
+
+    <div id="newTransferForm" class="form-container" style="display: none;">
+      <form id="transferForm" action="{% url 'add_transfer' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="currentOwner" class="form-label">Current Owner</label>
+          <input type="text" id="currentOwner" name="currentOwner" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="newOwner" class="form-label">New Owner</label>
+          <input type="text" id="newOwner" name="newOwner" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="propertyId" class="form-label">Property ID/Survey No.</label>
+          <input type="text" id="propertyId" name="propertyId" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="transferReason" class="form-label">Transfer Reason</label>
+          <select id="transferReason" name="transferReason" class="form-select" required>
+            <option value="">Select Reason</option>
+            <option value="sale">Sale</option>
+            <option value="inheritance">Inheritance</option>
+            <option value="gift">Gift</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="transferDetails" class="form-label">Additional Details</label>
+          <textarea id="transferDetails" name="transferDetails" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="transferDocs" class="form-label">Upload Documents</label>
+          <input type="file" id="transferDocs" name="transferDocs[]" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-success">
+          <i class="fas fa-check-circle"></i> Submit Transfer Request
+        </button>
+      </form>
+    </div>
+    
+    <!-- Search Transfer (hidden by default) -->
+    <div id="transferSearch" class="mb-3" style="display: none;">
+      <input type="text" id="transferSearchInput" class="form-control" placeholder="Search transfers by Property ID..." onkeyup="filterTransferRecords()">
+    </div>
+    
+    <!-- Transfer Records Table (for search results) -->
+    <div id="transferRecordsTable" class="records-table" style="display: block;">
+      <table id="transferTable" class="table table-bordered">
+        <thead class="table-light">
+          <tr>
+            <th>Transfer ID</th>
+            <th>Property ID</th>
+            <th>Current Owner</th>
+            <th>New Owner</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transfer in transfer %}
+          <tr>
+            <td>{{ transfer.transfer_id }}</td>
+            <td>{{ transfer.property_id }}</td>
+            <td>{{ transfer.current_owner }}</td>
+            <td>{{ transfer.new_owner }}</td>
+            <td>{{ transfer.status }}</td>
+            <td>
+              <div class="action-icons">
+                <i class="fas fa-eye" title="View"></i>
+                <i class="fas fa-edit" title="Edit"></i>
+                <i class="fas fa-times" title="Cancel"></i>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="text-center">No transfers found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Track Transfer (hidden by default) -->
+    <div id="transferTrack" class="mb-3" style="display: none;">
+      <div class="input-group">
+        <input type="text" id="transferTrackInput" class="form-control" placeholder="Enter Transfer ID">
+        <button class="btn btn-outline-secondary" type="button" onclick="trackTransfer(); return false;">
+          <i class="fas fa-search"></i> Track
+        </button>
+      </div>
+      <div id="transferTrackResult" class="mt-3" style="display: none;">
+        <h5>Transfer Status for <span class="transfer-id"></span></h5>
+        <div class="status-timeline d-flex justify-content-between">
+          <div class="timeline-item">
+            <i class="fas fa-file-alt"></i>
+            <small>Requested</small>
+          </div>
+          <div class="timeline-item">
+            <i class="fas fa-check-circle"></i>
+            <small>Processing</small>
+          </div>
+          <div class="timeline-item">
+            <i class="fas fa-check-double"></i>
+            <small>Completed</small>
+          </div>
+        </div>
+        <div class="status-details mt-2">
+          <p><strong>Status:</strong> <span class="transfer-status"></span></p>
+          <p><strong>Last Updated:</strong> <span class="transfer-last-update"></span></p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Transfer History (hidden by default) -->
+    <div id="transferHistory" class="mb-3" style="display: none;">
+      <h4>Transfer History</h4>
+      <div class="records-table">
+        <table id="transferHistoryTable" class="table table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>Transfer ID</th>
+              <th>Property ID</th>
+              <th>Current Owner</th>
+              <th>New Owner</th>
+              <th>Status</th>
+              <th>Submission Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for history in transfer_history %}
+            <tr>
+              <td>{{ history.transfer_id }}</td>
+              <td>{{ history.property_id }}</td>
+              <td>{{ history.current_owner }}</td>
+              <td>{{ history.new_owner }}</td>
+              <td>{{ history.status }}</td>
+              <td>{{ history.submission_date }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="6" class="text-center">No transfer history found.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  
+
+
+  {% endblock %}
+
+
+{% block extra_scripts %}
+<script>
+  // Example JavaScript functions – you can include your existing functions or adjust them as needed.
+
+  function closeOptionalSections() {
+    // List all IDs of elements that should be closed when switching options
+    const ids = ["recordForm", "searchFilters", "trackApplicationForm", "allRecords"];
+    ids.forEach(function(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.display = "none";
+      }
+    });
+  }
+
+  function showAllRecords() {
+    closeOptionalSections();  // Close any optional sections first
+    const allRecords = document.getElementById("allRecords");
+    if (allRecords) {
+      allRecords.style.display = "block";
+      allRecords.scrollIntoView({ behavior: "smooth" });
+    } else {
+      console.error("Element with id 'allRecords' not found.");
+    }
+  }
+
+  function viewDocument(url) {
+    // Get the container for viewing the document
+    const viewer = document.getElementById("docViewer");
+    // Create an iframe to embed the document (assuming it's a PDF)
+    // You can adjust width/height as needed.
+    console.log(url)
+    viewer.innerHTML = `<iframe src="${url}" width="100%" height="600px" style="border: none;"></iframe>`;
+    viewer.style.display = "block";
+    // Optionally scroll the viewer into view
+    viewer.scrollIntoView({ behavior: "smooth" });
+  }
+  
+
+
+  function toggleForm(formId) {
+    const form = document.getElementById(formId);
+    form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+    if (form.style.display === "block") {
+      form.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+
+  function toggleSearch() {
+    closeOptionalSections();
+    const searchFilters = document.getElementById("searchFilters");
+    if (searchFilters.style.display === "none" || searchFilters.style.display === "") {
+      searchFilters.style.display = "block";
+      document.getElementById("searchInput").focus();
+    } else {
+      searchFilters.style.display = "none";
+    }
+  }
+
+  function toggleTrackApplication() {
+    closeOptionalSections();
+    const searchFilters = document.getElementById("trackApplicationForm");
+    console.log("hi")
+    if (searchFilters.style.display === "none" || searchFilters.style.display === "") {
+      searchFilters.style.display = "block";
+      document.getElementById("searchInput").focus();
+    } else {
+      searchFilters.style.display = "none";
+    }
+  }
+
+  function filterRecords() {
+    const input = document.getElementById("searchInput");
+    const filter = input.value.toUpperCase();
+    const table = document.getElementById("recordsTable");
+    const tr = table.getElementsByTagName("tr");
+
+    const recordsContainer = document.getElementById("allRecords");
+    console.log(recordsContainer)
+    if (recordsContainer) {
+      recordsContainer.style.display = "block";
+    }
+
+    
+    
+    // Start at 1 to skip the header row
+    for (let i = 1; i < tr.length; i++) {
+      // Get the first cell (survey number)
+      const td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        const surveyNo = td.textContent || td.innerText;
+        if (surveyNo.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+  
+  
+  function handleNewApplication() {
+    closeOptionalSections();
+    const forms = document.querySelectorAll(".form-container");
+    forms.forEach(function(form) {
+      form.style.display = "none";
+    });
+    const recordForm = document.getElementById("recordForm");
+    recordForm.style.display = "block";
+    recordForm.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("landApplicationForm").reset();
+    // Removed setting of regDate because input[name="regDate"] is not in the form.
+    // const today = new Date().toISOString().split("T")[0];
+    // document.querySelector('input[name="regDate"]').value = today;
+  }
+
+
+  function trackApplication() {
+    // Get the Application ID from the input field
+    const appId = document.getElementById("trackApplicationId").value.trim();
+    if (!appId) {
+      alert("Please enter an Application ID.");
+      return;
+    }
+  
+    // Call the Django view via AJAX
+    fetch(`/track_application/?application_id=${encodeURIComponent(appId)}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success") {
+          // Show the trackApplicationResult element
+          const resultDiv = document.getElementById("trackApplicationResult");
+          resultDiv.style.display = "block";
+          
+          // Update status details
+          resultDiv.querySelector(".status-text").textContent = data.application.status;
+          resultDiv.querySelector(".last-update").textContent = data.application.registered_date;
+          resultDiv.querySelector(".completion-date").textContent = data.application.estimated_completion_date;
+  
+          // Update timeline items (example: add 'completed' class based on status)
+          const timelineItems = resultDiv.querySelectorAll(".timeline-item");
+          // First, remove any existing 'completed' or 'active' classes:
+          timelineItems.forEach(item => {
+            item.classList.remove("completed", "active");
+          });
+          
+          // Define an order of statuses
+          const statusOrder = ["Submitted", "Under Review", "Verification", "Completed"];
+          const currentStatus = data.application.status;
+          const currentIndex = statusOrder.indexOf(currentStatus);
+          
+          timelineItems.forEach((item, index) => {
+            if (index <= currentIndex) {
+              item.classList.add("completed");
+            }
+            if (index === currentIndex && currentStatus !== "Completed") {
+              // Optionally mark the current stage as active (if desired)
+              item.classList.add("active");
+            }
+          });
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching application data:", error);
+        alert("An error occurred while tracking the application.");
+      });
+  }
+
+
+
+
+
+  // ownership transfer JS
+  // Helper function: close all optional sections in the Ownership Transfer area.
+  function closeOwnershipTransferSections() {
+    const ids = ["newTransferForm", "transferSearch", "transferRecordsTable", "transferTrack", "transferHistory"];
+    ids.forEach(function(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.display = "none";
+      }
+    });
+  }
+
+  // Toggle New Transfer Form
+  function handleNewTransfer() {
+    closeOwnershipTransferSections();
+    const newTransferForm = document.getElementById("newTransferForm");
+    newTransferForm.style.display = "block";
+    newTransferForm.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("transferForm").reset();
+  }
+
+  // Toggle Search Transfer option
+  function toggleTransferSearch() {
+    closeOwnershipTransferSections();
+    const searchSection = document.getElementById("transferSearch");
+    if (searchSection.style.display === "none" || searchSection.style.display === "") {
+      searchSection.style.display = "block";
+      // Optionally, focus the search input:
+      // document.getElementById("transferSearchInput").focus();
+    } else {
+      searchSection.style.display = "none";
+    }
+  }
+
+  // Function to filter transfer records by Property ID
+  function filterTransferRecords() {
+    const input = document.getElementById("transferSearchInput");
+    const filter = input.value.toUpperCase();
+    const table = document.getElementById("transferTable");
+    const tr = table.getElementsByTagName("tr");
+
+    const recordsContainer = document.getElementById("transferRecordsTable");
+    console.log(recordsContainer)
+    if (recordsContainer) {
+      recordsContainer.style.display = "block";
+    }
+    
+    // Start at 1 to skip the header row
+    for (let i = 1; i < tr.length; i++) {
+      // Assume Property ID is in the second column (index 1)
+      const td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        console.log(td);
+        const propertyId = td.textContent || td.innerText;
+        tr[i].style.display = propertyId.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+      }
+    }
+  }
+
+  // Toggle Track Transfer option
+  function toggleTransferTracking() {
+    closeOwnershipTransferSections();
+    const trackSection = document.getElementById("transferTrack");
+    if (trackSection.style.display === "none" || trackSection.style.display === "") {
+      trackSection.style.display = "block";
+      document.getElementById("transferTrackInput").focus();
+    } else {
+      trackSection.style.display = "none";
+    }
+  }
+
+  // Toggle Transfer History option
+  function toggleTransferHistory() {
+    closeOwnershipTransferSections();
+    const historySection = document.getElementById("transferRecordsTable");
+    if (historySection.style.display === "none" || historySection.style.display === "") {
+      historySection.style.display = "block";
+    } else {
+      historySection.style.display = "none";
+    }
+  }
+
+  // Track Transfer using an AJAX call (example)
+  function trackTransfer() {
+    const transferId = document.getElementById("transferTrackInput").value.trim();
+    if (!transferId) {
+      alert("Please enter a Transfer ID.");
+      return;
+    }
+    fetch(`/track_transfer/?transfer_id=${encodeURIComponent(transferId)}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success") {
+          const resultDiv = document.getElementById("transferTrackResult");
+          resultDiv.style.display = "block";
+          // Update the result details
+          resultDiv.querySelector(".transfer-id").textContent = data.transfer.transfer_id;
+          resultDiv.querySelector(".transfer-status").textContent = data.transfer.status;
+          resultDiv.querySelector(".transfer-last-update").textContent = data.transfer.last_update;
+          // Optionally update timeline classes based on status here.
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch(error => {
+        console.error("Error tracking transfer:", error);
+        alert("An error occurred while tracking the transfer.");
+      });
+  }
+  
+
+  // Additional functions like toggleSearch, toggleTrackApplication, trackApplication, etc.
+  // can be defined or imported here as needed.
+</script>
+{% endblock %}

@@ -1,0 +1,301 @@
+{% extends "base_official_dashboard.html" %}
+{% load static %}
+
+{% block css %}
+
+/* Global Theme */
+/* Global Theme */
+body {
+    font-family: "Poppins", sans-serif;
+    background: radial-gradient(circle at top, #0d47a1, #001735 70%);
+    margin: 0;
+    padding: 0;
+    color: #e3e7ec;
+}
+
+/* Main Container */
+.inbox-container {
+    max-width: 1500px;      /* Increased width */
+    margin: 50px auto;      /* More space from top */
+    padding: 40px;          /* More breathing room */
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    animation: fadeIn 0.7s ease-in-out;
+}
+
+/* Heading */
+.inbox-container h2 {
+    text-align: center;
+    margin-bottom: 35px;   /* FIX: increased spacing */
+    color: #f5c84c;
+    text-shadow: 0 0 8px rgba(245,200,76,0.5);
+    font-size: 1.9rem;     /* Slightly larger */
+}
+
+/* Toolbar */
+.inbox-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    margin-bottom: 25px;  /* More spacing */
+}
+
+/* Action Buttons */
+.action-button {
+    background: linear-gradient(135deg, #4dd0e1, #0288d1);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(77,208,225,0.35);
+    transition: 0.25s ease;
+}
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(77,208,225,0.7);
+}
+
+/* Filter Section */
+.filter-box {
+    background: rgba(255,255,255,0.05);
+    padding: 18px 25px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.15);
+    margin-bottom: 25px; /* FIX: spacing */
+}
+
+/* Dropdown */
+.dropdown-select {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    min-width: 150px; /* Slightly wider */
+}
+
+/* TABLE */
+.inbox-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* Table Header */
+.inbox-table th {
+   
+    padding: 14px;                  /* FIX: was 22px (too big) */
+    color: #f5c84c;
+    font-size: 0.95rem;
+    text-shadow: 0 0 4px rgba(245,200,76,0.3);
+}
+
+/* Table Cells */
+.inbox-table td {
+    padding: 14px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: #e9ebef;
+}
+
+.inbox-table tr:hover {
+    background: rgba(77,208,225,0.10);
+}
+
+/* View Button */
+.btn-view {
+    background: linear-gradient(135deg, #8bc34a, #4caf50);
+    padding: 6px 14px;
+    border-radius: 6px;
+    color: white;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* HISTORY BLOCK */
+.history-block {
+    background: rgba(255,255,255,0.07);
+    padding: 20px;
+    border-radius: 14px;
+    margin-top: 15px;            /* FIX: more spacing */
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.18);
+    animation: slideDown 0.35s ease-out;
+}
+
+/* Animation */
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Footer */
+.inbox-footer {
+    margin-top: 25px;             /* FIX spacing */
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.18);
+}
+
+.page-button {
+    background: linear-gradient(135deg, #4dd0e1, #0288d1);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(77,208,225,0.35);
+    transition: 0.25s ease;
+}
+
+
+.page-button.active {
+    background: #4dd0e1;
+    color: #001c40;
+    font-weight: 700;
+}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="inbox-container">
+
+    <h2>📥 Inbox – Blockchain Verified Messages</h2>
+
+    <!-- Toolbar -->
+    <div class="inbox-toolbar">
+        <button class="action-button">Mark as Read</button>
+        <button class="action-button">Delete</button>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-box">
+        <div style="display:flex; align-items:center; gap:25px;">
+            <input type="checkbox">
+            <label>Search Here:</label>
+
+            <select class="dropdown-select">
+                <option>Show All</option>
+            </select>
+
+            <select class="dropdown-select">
+                <option>Unread</option>
+                <option>Read</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <table class="inbox-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Comp. No.</th>
+                <th>File No.</th>
+                <th>Subject</th>
+                <th>Status</th>
+                <th>Currently With</th>
+                <th>Created At</th>
+                <th>Actions</th>
+                <th>History</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for msg in messages_list %}
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>{{ msg.comp_no }}</td>
+                <td>{{ msg.file_no }}</td>
+                <td>{{ msg.subject }}</td>
+                <td>{{ msg.get_status_display }}</td>
+                <td>{{ msg.currently_with.designation|upper }}</td>
+                <td>{{ msg.created_at|date:"Y-m-d" }}</td>
+
+                <td>
+                    {% if msg.receipt %}
+                    <a href="{{ msg.receipt.url }}" target="_blank">
+                        <button class="btn-view">📄 View</button>
+                    </a>
+                    {% else %}
+                    <span>No Receipt</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    <button class="action-button" style="padding:6px 12px;" onclick="toggleHistory('{{ msg.id }}')">
+                        View
+                    </button>
+                </td>
+            </tr>
+
+            <!-- FIXED HISTORY BLOCK -->
+            <tr id="history-row-{{ msg.id }}" style="display:none;">
+                <td colspan="9">
+                    <div class="history-block">
+                        <h4 style="color:#4dd0e1; margin-bottom:15px;">
+                            History – {{ msg.comp_no }}
+                        </h4>
+
+                        <table class="table table-dark table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Sent By</th>
+                                    <th>Sent To</th>
+                                    <th>Date</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for entry in msg.history.all|dictsortreversed:'timestamp' %}
+                                <tr>
+                                    <td>{{ entry.from_user.designation }}</td>
+                                    <td>{{ entry.to_user.designation }}</td>
+                                    <td>{{ entry.timestamp|date:"Y-m-d H:i" }}</td>
+                                    <td>{{ entry.remarks|default:"No remarks" }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="4">No History</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Footer -->
+    <div class="inbox-footer">
+        <div class="records-count">Total Messages: {{ messages_list|length }}</div>
+
+        <div style="display:flex; gap:3px;">
+            <button class="page-button">«</button>
+            <button class="page-button active">1</button>
+            <button class="page-button">»</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function toggleHistory(id) {
+    const row = document.getElementById("history-row-" + id);
+    row.style.display = row.style.display === "none" ? "table-row" : "none";
+}
+</script>
+
+{% endblock %}
