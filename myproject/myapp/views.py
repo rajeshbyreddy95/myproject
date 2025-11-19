@@ -341,6 +341,12 @@ def get_official_by_role(role):
     return User.objects.filter(designation__iexact=role, user_type='official').first()
 
 from weasyprint import HTML
+import json
+import base64
+try:
+    import qrcode
+except Exception:
+    qrcode = None
 
 def generate_receipt_pdf(land_request):
     html_string = render_to_string('receipt_pdf.html', {'land_request': land_request})
@@ -614,7 +620,71 @@ def official_receipt_sent(request):
 
 
 def generate_patta_pdf(land_request):
-    html_string = render_to_string('patta_pdf.html', {'land_request': land_request})
+    # Build a flat context matching the template variable names
+    certificate_number = getattr(land_request, 'receipt_number', None) or f"PATTA-{land_request.pk}"
+    full_name = getattr(land_request, 'full_name', '')
+    father_name = getattr(land_request, 'owner_name', '')
+    aadhaar = getattr(land_request, 'aadhar_number', '')
+    mobile = getattr(land_request, 'phone_number', '')
+    district = getattr(land_request, 'state', '')
+    mandal = getattr(land_request, 'city', '')
+    village = getattr(land_request, 'address', '')
+    survey_number = getattr(land_request, 'survey_number', '')
+    patta_number = certificate_number
+    land_area = getattr(land_request, 'area', '')
+    # land_type is not a field on the model; fallback to nature
+    land_type = getattr(land_request, 'land_type', None) or getattr(land_request, 'nature', '')
+    issued_date = now().strftime('%d-%m-%Y')
+
+    # Prepare QR payload
+    qr_payload = {
+        'certificate_number': certificate_number,
+        'full_name': full_name,
+        'father_name': father_name,
+        'aadhaar': aadhaar,
+        'mobile': mobile,
+        'district': district,
+        'mandal': mandal,
+        'village': village,
+        'survey_number': survey_number,
+        'patta_number': patta_number,
+        'land_area': land_area,
+        'land_type': land_type,
+        'issued_date': issued_date,
+    }
+
+    qr_code_data_url = ''
+    if qrcode is not None:
+        try:
+            qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=4, border=2)
+            qr.add_data(json.dumps(qr_payload, ensure_ascii=False))
+            qr.make(fit=True)
+            img = qr.make_image(fill_color='black', back_color='white')
+            buffer = BytesIO()
+            img.save(buffer, format='PNG')
+            buffer.seek(0)
+            qr_code_data_url = 'data:image/png;base64,' + base64.b64encode(buffer.read()).decode()
+        except Exception:
+            qr_code_data_url = ''
+
+    context = {
+        'certificate_number': certificate_number,
+        'full_name': full_name,
+        'father_name': father_name,
+        'aadhaar': aadhaar,
+        'mobile': mobile,
+        'district': district,
+        'mandal': mandal,
+        'village': village,
+        'survey_number': survey_number,
+        'patta_number': patta_number,
+        'land_area': land_area,
+        'land_type': land_type,
+        'issued_date': issued_date,
+        'qr_code_data_url': qr_code_data_url,
+    }
+
+    html_string = render_to_string('patta_pdf.html', context)
     pdf_file = BytesIO()
     HTML(string=html_string).write_pdf(target=pdf_file)
     return pdf_file.getvalue()

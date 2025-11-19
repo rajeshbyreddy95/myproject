@@ -104,8 +104,7 @@
     }
 </style>
 
-<!-- QR JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<!-- QR is generated server-side; no client JS needed -->
 
 </head>
 <body>
@@ -159,59 +158,19 @@
             </div>
         </div>
 
-        <!-- QR CODE -->
-        <div class="barcode-section" id="qrcode"></div>
+        <!-- QR CODE (server-generated PNG data URI) -->
+        <div class="barcode-section">
+            {% if qr_code_data_url %}
+                <img src="{{ qr_code_data_url }}" alt="QR Code" style="width:140px;height:140px;" />
+            {% else %}
+                <div style="font-size:12px;color:#666;padding-top:50px;">QR unavailable</div>
+            {% endif %}
+        </div>
     </div>
 
 </div>
 
-<!-- PRINT-SAFE QR CODE (PNG Conversion) -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-    const qrData = {
-        certificate_number: "{{ certificate_number }}",
-        full_name: "{{ full_name }}",
-        father_name: "{{ father_name }}",
-        aadhaar: "{{ aadhaar }}",
-        mobile: "{{ mobile }}",
-        district: "{{ district }}",
-        mandal: "{{ mandal }}",
-        village: "{{ village }}",
-        survey_number: "{{ survey_number }}",
-        patta_number: "{{ patta_number }}",
-        land_area: "{{ land_area }}",
-        land_type: "{{ land_type }}",
-        issued_date: "{{ issued_date }}"
-    };
-
-    // Hidden QR generator
-    var hidden = document.createElement("div");
-    hidden.style.display = "none";
-    document.body.appendChild(hidden);
-
-    new QRCode(hidden, {
-        text: JSON.stringify(qrData, null, 2),
-        width: 140,
-        height: 140,
-        correctLevel: QRCode.CorrectLevel.H
-    });
-
-    // Canvas → PNG
-    setTimeout(() => {
-        const canvas = hidden.querySelector("canvas");
-        const img = document.createElement("img");
-
-        img.src = canvas.toDataURL("image/png");
-        img.style.width = "140px";
-        img.style.height = "140px";
-
-        document.getElementById("qrcode").appendChild(img);
-        document.body.removeChild(hidden);
-    }, 300);
-
-});
-</script>
+<!-- QR generation is handled server-side in the view -->
 
 </body>
 </html>

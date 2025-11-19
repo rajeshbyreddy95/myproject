@@ -36,7 +36,7 @@
     },
     "certificateAuthorities": {
         "ca.org3.example.com": {
-            "url": "https://localhost:11054",
+            "url": "https://localhost:12054",
             "caName": "ca-org3",
             "tlsCACerts": {
                 "pem": "-----BEGIN CERTIFICATE-----\nMIICKDCCAc+gAwIBAgIUFX4UW5oTeeodp26DIBnFTl68CRowCgYIKoZIzj0EAwIw\ncTELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRAwDgYDVQQH\nEwdSYWxlaWdoMRkwFwYDVQQKExBvcmczLmV4YW1wbGUuY29tMRwwGgYDVQQDExNj\nYS5vcmczLmV4YW1wbGUuY29tMB4XDTI1MTExNzA5MTMwMFoXDTQwMTExMzA5MTMw\nMFowcTELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRAwDgYD\nVQQHEwdSYWxlaWdoMRkwFwYDVQQKExBvcmczLmV4YW1wbGUuY29tMRwwGgYDVQQD\nExNjYS5vcmczLmV4YW1wbGUuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE\nWckiLEkys3BNWA0zCIhI4qhpYuRNZ91NP8l5DxmP8msESEOkN3m9WkmPM0h0Yt7f\nKEi2TDX0jLVwyhuZL6y4WaNFMEMwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQI\nMAYBAf8CAQEwHQYDVR0OBBYEFAI12qYxdrB9vG+hRDgfwVAOT9poMAoGCCqGSM49\nBAMCA0cAMEQCIAU4962M/cK2UsB6N/kRuUJQIIVJcWwon4MLUwg8zZiWAiAqHvw8\nsuFiy3jh3coX0SZOkQL5mQO8WK/zxOi4yamA4Q==\n-----END CERTIFICATE-----\n"

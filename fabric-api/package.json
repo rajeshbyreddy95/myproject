@@ -15,6 +15,7 @@
     "express": "^4.21.2",
     "fabric-ca-client": "^2.2.20",
     "fabric-common": "^2.2.20",
-    "fabric-network": "^2.2.20"
+    "fabric-network": "^2.2.20",
+    "uuid": "^13.0.0"
   }
 }

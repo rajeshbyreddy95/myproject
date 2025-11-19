@@ -4,6 +4,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const { v4: uuidv4 } = require('uuid');
 
 const {
     getAllLandRequests,
@@ -24,7 +25,8 @@ app.get('/api/landrequests', async (req, res) => {
         const user = req.query.user || "admin";
 
         const result = await getAllLandRequests(org, user);
-        res.json(result);
+        res.setHeader("Content-Type", "application/json");
+        res.send(JSON.stringify(result, null, 4));   // Pretty JSON
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
