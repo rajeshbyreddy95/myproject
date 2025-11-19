@@ -1,6 +1,7 @@
 'use strict';
 
 const { Contract } = require('fabric-contract-api');
+const { v4: uuidv4 } = require("uuid");
 
 class LandRecordContract extends Contract {
     async Init(ctx) {
@@ -14,7 +15,16 @@ class LandRecordContract extends Contract {
         }
 
         const data = JSON.parse(dataJson);
-        data.history = [];
+        // Initialize history array (may be empty on creation)
+        data.history = Array.isArray(data.history) ? data.history : [];
+        // Ensure any provided history entries have a txn_id
+        for (let i = 0; i < data.history.length; i++) {
+            const h = data.history[i];
+            if (!h.txn_id && !h.txnId) {
+                h.txn_id = "HIST-" + uuidv4().replace(/-/g, "").substring(0, 12).toUpperCase();
+            }
+            if (!h.patta_id) h.patta_id = "";
+        }
         await ctx.stub.putState(receipt_number, Buffer.from(JSON.stringify(data)));
         return `Land request ${receipt_number} created successfully`;
     }
@@ -42,6 +52,19 @@ async updateLandStatus(ctx, receipt_number, newStatus, assignedTo, remarks, from
     // Parse the existing record
     const land = JSON.parse(buffer.toString());
 
+    // Ensure history array exists and retroactively add txn_id for any missing entries
+    if (!Array.isArray(land.history)) {
+        land.history = [];
+    } else {
+        for (let i = 0; i < land.history.length; i++) {
+            const entry = land.history[i];
+            if (!entry.txn_id && !entry.txnId) {
+                entry.txn_id = "HIST-" + uuidv4().replace(/-/g, "").substring(0, 12).toUpperCase();
+            }
+            if (!entry.patta_id) entry.patta_id = "";
+        }
+    }
+
     // Build the new history entry
     const newEntry = {
         timestamp: timestamp || new Date().toISOString(),
@@ -49,7 +72,8 @@ async updateLandStatus(ctx, receipt_number, newStatus, assignedTo, remarks, from
         to_user: assignedTo,
         action: newStatus,
         remarks: remarks || "",
-        patta_id: ""  // ✅ Always present, but initially empty
+        patta_id: "",  // ✅ Always present, but initially empty
+        txn_id: "HIST-" + uuidv4().replace(/-/g, "").substring(0, 12).toUpperCase()
     };
 
     // ✅ Only when approved, set Patta ID
